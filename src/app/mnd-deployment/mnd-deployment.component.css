@@ -12,16 +12,25 @@ h3 {
 
 .example-container {
   padding: 5px 10px;
+  box-sizing: border-box;
   overflow: auto;
-  height: 80vh;
-  width: 95%;
+  height: 85vh;
+  width: 90%;
   margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
 }
 
 .control-wrap {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.mat-table {
+  width: 90%;
 }
 
 table {
