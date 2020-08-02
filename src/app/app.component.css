@@ -1,0 +1,21 @@
+.mat-nav-list {
+    background-color: #3f51b5;
+}
+
+.mat-toolbar-row {
+    text-align: center;
+}
+
+.mat-list-item {
+    color: white;
+}
+
+.mat-list-item:hover {
+    background-color: white;
+    color: black;
+}
+
+.active {
+    background-color: white;
+    color: #3f51b5;
+}

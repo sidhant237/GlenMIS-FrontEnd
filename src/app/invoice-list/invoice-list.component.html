@@ -1,0 +1,63 @@
+<mat-grid-list cols="3" rowHeight="90px">
+    <mat-grid-tile colspan="1">
+      <h3>Invoice reports</h3>
+    </mat-grid-tile>
+    <mat-grid-tile colspan="2">
+      <mat-form-field>
+        <input matInput [matDatepicker]="picker1" placeholder="Start Date" [value]="startdate" disabled
+          (dateChange)="dateChange('startdate', $event)">
+        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+        <mat-datepicker #picker1 disabled="false"></mat-datepicker>
+      </mat-form-field>
+  
+      <mat-form-field>
+        <input matInput [matDatepicker]="picker2" placeholder="End Date" [value]="enddate" disabled
+          (dateChange)="dateChange('enddate', $event)">
+        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+        <mat-datepicker #picker2 disabled="false"></mat-datepicker>
+      </mat-form-field>
+  
+      <button mat-raised-button color="primary" (click)="clickedGo()">Go</button>
+    </mat-grid-tile>
+</mat-grid-list>
+  
+<div class="example-container mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource">
+
+        <ng-container matColumnDef="InvNo">
+        <th mat-header-cell *matHeaderCellDef> InvNo </th>
+        <td mat-cell *matCellDef="let element"> {{element.InvNo}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Grade">
+        <th mat-header-cell *matHeaderCellDef> Grade </th>
+        <td mat-cell *matCellDef="let element"> {{element.Grade}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="NetWt">
+        <th mat-header-cell *matHeaderCellDef> Net Wt </th>
+        <td mat-cell *matCellDef="let element"> {{element.NetWt}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Papersacks">
+        <th mat-header-cell *matHeaderCellDef> Paper Sacks </th>
+        <td mat-cell *matCellDef="let element"> {{element.Papersacks}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Packdate">
+        <th mat-header-cell *matHeaderCellDef> Packdate </th>
+        <td mat-cell *matCellDef="let element"> {{element.Packdate}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="DispatchDate">
+        <th mat-header-cell *matHeaderCellDef> Dispatch Date </th>
+        <td mat-cell *matCellDef="let element"> {{element.DispatchDate}} </td>
+        <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
+
+        <!-- header -->
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+        <!-- data -->
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+</div>
