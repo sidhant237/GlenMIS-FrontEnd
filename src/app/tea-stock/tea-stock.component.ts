@@ -12,7 +12,7 @@ export class TeaStockComponent implements OnInit {
   startdate: any;
   enddate: any;
   displayedColumns: string[];
-  dataSource: Invoice;
+  dataSource: TeaStock;
 
   constructor(private http: HttpClient) {
   }
@@ -21,17 +21,17 @@ export class TeaStockComponent implements OnInit {
     this.startdate = new Date();
     this.enddate = new Date();
     this.startdate.setDate(this.startdate.getDate() - 1);
-    this.displayedColumns = ['InvNo', 'Grade', 'NetWt', 'Papersacks', 'Packdate', 'DispatchDate'];
+    this.displayedColumns = ['Grade', 'Kg' ];
 
-    const url = 'http://127.0.0.1:5000/invoicelist?start=' + this.convert(this.startdate) + '&end=' + this.convert(this.enddate);
-    this.http.get(url).subscribe((data: Invoice) => {
+    const url = 'http://127.0.0.1:5000/teastock?start=' + this.convert(this.startdate) + '&end=' + this.convert(this.enddate);
+    this.http.get(url).subscribe((data: TeaStock) => {
     this.dataSource = data;
     });
   }
 
   clickedGo() {
-    const url = 'http://127.0.0.1:5000/invoicelist?start=' + this.convert(this.startdate) + '&end=' + this.convert(this.enddate);
-    this.http.get(url).subscribe((data: Invoice) => {
+    const url = 'http://127.0.0.1:5000/teastock?start=' + this.convert(this.startdate) + '&end=' + this.convert(this.enddate);
+    this.http.get(url).subscribe((data: TeaStock) => {
       this.dataSource = data;
     });
   }
@@ -51,11 +51,7 @@ export class TeaStockComponent implements OnInit {
     }
 }
 
-export interface Invoice {
-  InvNo: string;
+export interface TeaStock {
   Grade: string;
-  NetWt: string;
-  Papersacks: string;
-  Packdate: number;
-  DispatchDate: number;
+  Kg: number;
 }
