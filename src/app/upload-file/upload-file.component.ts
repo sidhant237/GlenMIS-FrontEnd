@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-upload-file',
@@ -9,8 +10,9 @@ import { HttpClient } from '@angular/common/http';
 export class UploadFileComponent implements OnInit {
 
   fileToUpload: File = null;
+  database: string;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private snackBar: MatSnackBar) { }
 
   ngOnInit() {
   }
@@ -20,16 +22,27 @@ export class UploadFileComponent implements OnInit {
   }
 
   uploadFileToServer() {
-    const url = 'http://127.0.0.1:5000/upload';
+    const url = 'http://127.0.0.1:5000/upload?table=' + this.database;
     const formData: FormData = new FormData();
     formData.append('file', this.fileToUpload, this.fileToUpload.name);
     this.http.post(url, formData).subscribe(
-      result => {
-        console.log(result);
-      }, error => {
+      (result: Result) => {
+        this.openSnackBar(result.message, 'Success');
+      }, (error: Response) => {
+        this.openSnackBar('Somwthing went wrong', 'Error');
         console.log(error);
       }
     );
   }
 
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 3000,
+    });
+  }
+
+}
+
+export interface Result {
+  message: string;
 }
