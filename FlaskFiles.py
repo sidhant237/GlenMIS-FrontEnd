@@ -18,10 +18,10 @@ app.config['MYSQL_DB'] = "GlenDB"
 @cross_origin()
 def cultivationdaily():
       cur = mysql.connection.cursor()
-      d1 = "'2020-07-01'"
-      d2 = "'2020-07-14'"
-      #d1 = "'" + (str(request.args.get("start"))) + "'"
-      #d2 = "'" + (str(request.args.get("end"))) + "'"
+      #d1 = "'2020-07-01'"
+      #d2 = "'2020-07-14'"
+      d1 = "'" + (str(request.args.get("start"))) + "'"
+      d2 = "'" + (str(request.args.get("end"))) + "'"
 
       con = "FIELDENTRY.DATE, JOBTAB.JOB_NAME, SECTAB.SEC_NAME, SQUTAB.SQU_NAME"
       val = "MND_VAL, AREA_VAL"
@@ -97,10 +97,10 @@ def cultivationgroup():
 
 def pluckingdaily():
       cur = mysql.connection.cursor()
-      d1 = "'2020-07-01'"
-      d2 = "'2020-07-02'"
-      #d1 = "'" + (str(request.args.get("start"))) + "'"
-      #d2 = "'" + (str(request.args.get("end"))) + "'"
+      #d1 = "'2020-07-01'"
+      #d2 = "'2020-07-02'"
+      d1 = "'" + (str(request.args.get("start"))) + "'"
+      d2 = "'" + (str(request.args.get("end"))) + "'"
 
       con = "fieldentry.date,SECTAB.SEC_NAME,SQUTAB.SQU_NAME"
       val = "FIELDENTRY.MND_VAL, FIELDENTRY.GL_VAL, FIELDENTRY.AREA_VAL"
@@ -111,7 +111,7 @@ def pluckingdaily():
       job = "(FIELDENTRY.JOB_ID = 1 )"
       cur.execute(f'''select {con} , {val} , {fom} , {con2} from {tab} where {joi} and date >={d1} and date <={d2} and {job}''')
 
-      row_headers = ['Date', 'Section_Name', 'Squad_Name', 'Mandays', 'Greenleaf', 'AreaCovered', 'Gl/Mnd', 'Gl/Ha', 'Mnd/Ha','Division','Prune','Jat', "Sec Area"]
+      row_headers = ['Date', 'Section_Name', 'Squad_Name', 'Mandays', 'Greenleaf', 'AreaCovered', 'GlMnd', 'GlHa', 'MndHa','Division','Prune','Jat', "SecArea"]
       rv = cur.fetchall()
       json_data = []
 
@@ -130,14 +130,13 @@ def pluckingdaily():
 
 def pluckinggroup():
       cur = mysql.connection.cursor()
-      #d1 = "'" + (str(request.args.get("start"))) + "'"
-      #d2 = "'" + (str(request.args.get("end"))) + "'"
-      #grp = "'" + (str(request.args.get("grpby"))) + "'"
-      d1 = "'2020-07-01'"
-      d2 = "'2020-07-02'"
-      grp = "Squad"
+      d1 = "'" + (str(request.args.get("start"))) + "'"
+      d2 = "'" + (str(request.args.get("end"))) + "'"
+      grp = "'" + (str(request.args.get("grpby"))) + "'"
+      #d1 = "'2020-07-01'"
+      #grp = "Squad"
 
-      if grp == 'Section':
+      if grp == "'Section'":
             con = "SECTAB.SEC_NAME"
             val = "sum(FIELDENTRY.MND_VAL), sum(FIELDENTRY.GL_VAL), sum(FIELDENTRY.AREA_VAL)"
             fom = "ROUND((sum(GL_VAL)/sum(MND_VAL)),2), ROUND((sum(GL_VAL)/sum(AREA_VAL)),2),ROUND((sum(MND_VAL)/sum(AREA_VAL)),2)"
@@ -145,10 +144,10 @@ def pluckinggroup():
             joi = "FIELDENTRY.SQU_ID = SQUTAB.SQU_ID AND FIELDENTRY.JOB_ID=JOBTAB.JOB_ID AND FIELDENTRY.SEC_ID=SECTAB.SEC_ID AND DIVTAB.DIV_ID=SECTAB.DIV_ID"
             job = "(FIELDENTRY.JOB_ID = 1 )"
             cur.execute(f'''select {con} , {val} , {fom} from {tab} where {joi} and date >={d1} and date <={d2} and {job} ''')
-            row_headers = ['Section_Name', 'Mandays', 'Greenleaf', 'AreaCovered', 'GL/Mnd', 'GL/Area', 'Mnd/Area']
+            row_headers = ['Section_Name', 'Mandays', 'Greenleaf', 'AreaCovered', 'GLMnd', 'GLArea', 'MndArea']
             rv = cur.fetchall()
 
-      if grp == 'Division':
+      if grp == "'Division'":
             con = "DIVTAB.DIV_NAME"
             val = "sum(FIELDENTRY.MND_VAL), sum(FIELDENTRY.GL_VAL), sum(FIELDENTRY.AREA_VAL)"
             fom = "ROUND((SUM(GL_VAL)/SUM(MND_VAL)),2), ROUND((sum(GL_VAL)/sum(AREA_VAL)),2),ROUND((SUM(MND_VAL)/SUM(AREA_VAL)),2)"
@@ -157,10 +156,10 @@ def pluckinggroup():
             joi = "FIELDENTRY.SQU_ID = SQUTAB.SQU_ID AND FIELDENTRY.JOB_ID=JOBTAB.JOB_ID AND FIELDENTRY.SEC_ID=SECTAB.SEC_ID AND DIVTAB.DIV_ID=SECTAB.DIV_ID"
             job = "(FIELDENTRY.JOB_ID = 1 )"
             cur.execute(f'''select {con} , {val} , {fom} from {tab} where {joi} and date >={d1} and date <={d2} and {job} group by SECTAB.DIV_ID''')
-            row_headers = ['Division', 'Mandays', 'Greenleaf', 'AreaCovered', 'GL/Mnd', 'GL/Area', 'Mnd/Area']
+            row_headers = ['Division', 'Mandays', 'Greenleaf', 'AreaCovered', 'GLMnd', 'GLArea', 'MndArea']
             rv = cur.fetchall()
 
-      if grp == 'Squad':
+      if grp == "'Squad'":
             con = "SQUTAB.SQU_NAME"
             val = "sum(FIELDENTRY.MND_VAL), sum(FIELDENTRY.GL_VAL), sum(FIELDENTRY.AREA_VAL)"
             fom = "ROUND((sum(GL_VAL)/sum(MND_VAL)),2), ROUND((sum(GL_VAL)/sum(AREA_VAL)),2),ROUND((sum(MND_VAL)/sum(AREA_VAL)),2)"
@@ -169,7 +168,7 @@ def pluckinggroup():
             job = "(FIELDENTRY.JOB_ID = 1 )"
             cur.execute(f'''select {con} , {val} , {fom} from {tab} where {joi} and date >={d1} and date <={d2} and {job} group by SQUTAB.SQU_ID order by SQUTAB.SQU_NAME asc''')
 
-            row_headers = ['Squad', 'Mandays', 'Greenleaf', 'AreaCovered', 'GL/Mnd', 'GL/Area', 'Mnd/Area']
+            row_headers = ['Squad', 'Mandays', 'Greenleaf', 'AreaCovered', 'GLMnd', 'GLArea', 'MndArea']
             rv = cur.fetchall()
 
       json_data = []
@@ -188,17 +187,17 @@ def pluckinggroup():
 
 def mandaydeployment():
       cur = mysql.connection.cursor()
-      # d1 = "'" + (str(request.args.get("start"))) + "'"
-      # d2 = "'" + (str(request.args.get("end"))) + "'"
-      d1 = "'2020-07-01'"
-      d2 = "'2020-07-04'"
+      d1 = "'" + (str(request.args.get("start"))) + "'"
+      d2 = "'" + (str(request.args.get("end"))) + "'"
+      #d1 = "'2020-07-01'"
+      #d2 = "'2020-07-04'"
 
       con = "JOBTAB.JOB_NAME"
       val = "SUM(FIELDENTRY.MND_VAL)"
       tab = "FIELDENTRY,JOBTAB"
       joi = "FIELDENTRY.JOB_ID=JOBTAB.JOB_ID"
       cur.execute(f'''select {con} , {val} from {tab} where {joi} and date >={d1} and date <={d2} group by FIELDENTRY.JOB_ID''')
-      row_headers = ['Job Name', 'Mandays']
+      row_headers = ['Job_Name', 'Mandays']
 
       rv = cur.fetchall()
       json_data = []
@@ -230,7 +229,7 @@ def fuelreport():
       cur.execute(f'''select {con} , {fom}  from {tab} where {joi} and date >= {d1} and date <= {d2} group by MACHINETAB.MACH_NAME''')
       rv = cur.fetchall()
 
-      row_headers = ['Machine', 'FuelUsed' ,'TM','TMFuel']
+      row_headers = ['Machine', 'FuelUsed' , 'TM', 'TMFuel']
       json_data = []
 
       def sids_converter(o):
