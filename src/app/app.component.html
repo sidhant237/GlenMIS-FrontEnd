@@ -19,18 +19,19 @@
 <mat-sidenav-container>
   <mat-sidenav mode="side" opened>
     <mat-nav-list>
-      <a mat-list-item (click)="sidenav.open()"[routerLink]="'/cultdaily'" [routerLinkActive]="['active']"> Cultivation </a>
-      <a mat-list-item (click)="sidenav.open()"[routerLink]="'/cultgroup'" [routerLinkActive]="['active']"> Cultivation Group </a>
-      <a mat-list-item (click)="sidenav.open()"[routerLink]="'/pluckdaily'" [routerLinkActive]="['active']"> Plucking </a>
-      <a mat-list-item (click)="sidenav.open()"[routerLink]="'/pluckgroup'" [routerLinkActive]="['active']"> Plucking Group </a>
-      <a mat-list-item (click)="sidenav.open()"[routerLink]="'/mnddeploy'" [routerLinkActive]="['active']"> Mnd Deployment </a>
-      <a mat-list-item (click)="sidenav.open()"[routerLink]="'/fuelreport'" [routerLinkActive]="['active']"> Fuel Report </a>
-      <a mat-list-item (click)="sidenav.open()"[routerLink]="'/teastock'" [routerLinkActive]="['active']"> Tea Stock </a>
-      <a mat-list-item (click)="sidenav.open()"[routerLink]="'/teamade'" [routerLinkActive]="['active']"> Tea Made </a>
-      <a mat-list-item (click)="sidenav.open()"[routerLink]="'/fineleaf'" [routerLinkActive]="['active']"> Fine Leaf </a>
-      <a mat-list-item (click)="sidenav.open()"[routerLink]="'/gradeper'" [routerLinkActive]="['active']"> Grade Per </a>
-      <a mat-list-item (click)="sidenav.open()"[routerLink]="'/invoicelist'" [routerLinkActive]="['active']"> Invoice List </a>
-      <a mat-list-item (click)="sidenav.open()"[routerLink]="'/weather'" [routerLinkActive]="['active']"> Weather </a>
+      <a mat-list-item [routerLink]="'/cultdaily'" [routerLinkActive]="['active']"> Cultivation </a>
+      <a mat-list-item [routerLink]="'/cultgroup'" [routerLinkActive]="['active']"> Cultivation Group </a>
+      <a mat-list-item [routerLink]="'/pluckdaily'" [routerLinkActive]="['active']"> Plucking </a>
+      <a mat-list-item [routerLink]="'/pluckgroup'" [routerLinkActive]="['active']"> Plucking Group </a>
+      <a mat-list-item [routerLink]="'/mnddeploy'" [routerLinkActive]="['active']"> Mnd Deployment </a>
+      <a mat-list-item [routerLink]="'/fuelreport'" [routerLinkActive]="['active']"> Fuel Report </a>
+      <a mat-list-item [routerLink]="'/teastock'" [routerLinkActive]="['active']"> Tea Stock </a>
+      <a mat-list-item [routerLink]="'/teamade'" [routerLinkActive]="['active']"> Tea Made </a>
+      <a mat-list-item [routerLink]="'/fineleaf'" [routerLinkActive]="['active']"> Fine Leaf </a>
+      <a mat-list-item [routerLink]="'/gradeper'" [routerLinkActive]="['active']"> Grade Per </a>
+      <a mat-list-item [routerLink]="'/invoicelist'" [routerLinkActive]="['active']"> Invoice List </a>
+      <a mat-list-item [routerLink]="'/weather'" [routerLinkActive]="['active']"> Weather </a>
+      <a mat-list-item [routerLink]="'/upload-csv'" [routerLinkActive]="['active']"> Upload File </a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
