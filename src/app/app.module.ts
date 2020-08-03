@@ -8,7 +8,7 @@ import { MaterialModule } from './material-module';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
-//components
+// components
 import { CultivationComponent } from './cultivation/cultivation.component';
 import { CultivationGrpComponent } from './cultivation-grp/cultivation-grp.component';
 import { PluckingComponent } from './plucking/plucking.component';
@@ -21,6 +21,7 @@ import { FineLeafComponent } from './fine-leaf/fine-leaf.component';
 import { GradePerComponent } from './grade-per/grade-per.component';
 import { InvoiceListComponent } from './invoice-list/invoice-list.component';
 import { WeatherComponent } from './weather/weather.component';
+import { UploadFileComponent } from './upload-file/upload-file.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { WeatherComponent } from './weather/weather.component';
     FineLeafComponent,
     GradePerComponent,
     InvoiceListComponent,
-    WeatherComponent
+    WeatherComponent,
+    UploadFileComponent
   ],
   imports: [
     BrowserModule,
