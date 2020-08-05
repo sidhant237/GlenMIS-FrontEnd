@@ -20,7 +20,7 @@
     color: black;
 }
 
-.active {
+.mat-list-item.active {
     background-color: white;
     color: #4caf50;
 } 
