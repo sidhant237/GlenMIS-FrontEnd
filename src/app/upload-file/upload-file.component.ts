@@ -29,7 +29,7 @@ export class UploadFileComponent implements OnInit {
       (result: Result) => {
         this.openSnackBar(result.message, 'Success');
       }, (error: Response) => {
-        this.openSnackBar('Somwthing went wrong', 'Error');
+        this.openSnackBar('Something went wrong', 'Error');
         console.log(error);
       }
     );
@@ -39,6 +39,17 @@ export class UploadFileComponent implements OnInit {
     this.snackBar.open(message, action, {
       duration: 3000,
     });
+  }
+
+  emailReportHandler() {
+    const url = 'http://127.0.0.1:5000/email-report';
+    this.http.post(url, {}).subscribe(
+      result => {
+        this.openSnackBar('Email report generation initiated', 'success');
+      }, error => {
+        this.openSnackBar('Something went wrong', 'Error');
+      }
+    );
   }
 
 }
