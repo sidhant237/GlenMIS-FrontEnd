@@ -143,7 +143,7 @@ def pluckinggroup():
             tab = "FIELDENTRY,SQUTAB,JOBTAB,SECTAB,DIVTAB"
             joi = "FIELDENTRY.SQU_ID = SQUTAB.SQU_ID AND FIELDENTRY.JOB_ID=JOBTAB.JOB_ID AND FIELDENTRY.SEC_ID=SECTAB.SEC_ID AND DIVTAB.DIV_ID=SECTAB.DIV_ID"
             job = "(FIELDENTRY.JOB_ID = 1 )"
-            cur.execute(f'''select {con} , {val} , {fom} from {tab} where {joi} and date >={d1} and date <={d2} and {job} ''')
+            cur.execute(f'''select {con} , {val} , {fom} from {tab} where {joi} and date >={d1} and date <={d2} and {job} group by SECTAB.SEC_ID''')
             row_headers = ['Section_Name', 'Mandays', 'Greenleaf', 'AreaCovered', 'GLMnd', 'GLArea', 'MndArea']
             rv = cur.fetchall()
 
@@ -187,10 +187,10 @@ def pluckinggroup():
 
 def mandaydeployment():
       cur = mysql.connection.cursor()
-      d1 = "'" + (str(request.args.get("start"))) + "'"
-      d2 = "'" + (str(request.args.get("end"))) + "'"
-      #d1 = "'2020-07-01'"
-      #d2 = "'2020-07-04'"
+      #d1 = "'" + (str(request.args.get("start"))) + "'"
+      #d2 = "'" + (str(request.args.get("end"))) + "'"
+      d1 = "'2020-07-01'"
+      d2 = "'2020-07-04'"
 
       con = "JOBTAB.JOB_NAME"
       val = "SUM(FIELDENTRY.MND_VAL)"
@@ -335,45 +335,57 @@ def greenleaf():
       cur = mysql.connection.cursor()
       cur1 = mysql.connection.cursor()
       cur2 = mysql.connection.cursor()
+      cur3 = mysql.connection.cursor()
       # d1 = "'" + (str(request.args.get("start"))) + "'"
       # d11 = "'" + (str(request.args.get("end"))) + "'"
-      # grp = "'" + (str(request.args.get("grpby"))) + "'"
-      d1 = "'2020-07-02'"
-      d11 = "'2019-07-02'"
-      rv = []
-      column_headers = ['1', '2', '3', '4']
+      d1 = "'2020-07-01'"
+      d11 = "'2019-07-01'"
+      d2 = "'2020-07-03'"
 
-      #GL TODAY
-      val = "DIVTAB.DIV_NAME, sum(GL_VAL)"
-      tab = "FIELDENTRY, DIVTAB, SECTAB"
+      #DIV NAME
+      val = "DIVTAB.DIV_NAME"
+      tab = "DIVTAB, SECTAB, FIELDENTRY"
       joi = "(FIELDENTRY.SEC_ID=SECTAB.SEC_ID) AND (SECTAB.DIV_ID = DIVTAB.DIV_ID)"
       job = "FIELDENTRY.JOB_ID = 1"
-      cur.execute(f'''select {val} from {tab} where {joi} AND {job} and date = {d1} GROUP BY DIVTAB.DIV_NAME''')
-      rv.append (cur.fetchall()[0[0]])
+      cur.execute(f'''select {val} from {tab} where {joi} AND {job} and date = {d1} GROUP BY SECTAB.DIV_ID''')
+      rv = cur.fetchall()
 
-      #GLTODAY LY
-      val1 = "sum(GL_VAL)"
-      tab1 = "FIELDENTRY, DIVTAB, SECTAB"
+      # GL TODAY
+      val1 = "SUM(FIELDENTRY.GL_VAL)"
+      tab1 = "DIVTAB, SECTAB, FIELDENTRY"
       joi1 = "(FIELDENTRY.SEC_ID=SECTAB.SEC_ID) AND (SECTAB.DIV_ID = DIVTAB.DIV_ID)"
       job1 = "FIELDENTRY.JOB_ID = 1"
-      cur1.execute(f'''select {val1} from {tab1} where {joi1} AND {job1} and date = {d11} GROUP BY DIVTAB.DIV_NAME''')
-      rv.append (cur1.fetchall()[0[0]])
+      cur1.execute(f'''select {val1} from {tab1} where {joi1} AND {job1} and date = {d1} GROUP BY SECTAB.DIV_ID''')
+      rv1 = cur1.fetchall()
 
-      # FINE LEAF% TODAYS GL
-      val2 = 'sum(FL_PER)'
-      tab2 = "FLENTRY, DIVTAB"
-      joi2 = "(FLENTRY.DIV_ID = DIVTAB.DIV_ID)"
-      cur2.execute(f'''select {val2} from {tab2} where {joi2} and date = {d1} GROUP BY DIVTAB.DIV_ID''')
-      rv.append(cur2.fetchall()[0[0]])
+      #GL TODAY LAST YEA1R
+      val2 = "SUM(FIELDENTRY.GL_VAL)"
+      tab2 = "FIELDENTRY, DIVTAB, SECTAB"
+      joi2 = "(FIELDENTRY.SEC_ID=SECTAB.SEC_ID) AND (SECTAB.DIV_ID = DIVTAB.DIV_ID)"
+      job2 = "FIELDENTRY.JOB_ID = 1"
+      cur2.execute(f'''select {val2} from {tab2} where {joi2} AND {job2} and date = {d11} GROUP BY SECTAB.DIV_ID''')
+      rv2 = cur2.fetchall()
 
+      #FINE LEAF% TODAYS GL
+      val3 = "sum(FL_PER)"
+      tab3 = "FLENTRY, DIVTAB"
+      joi3 = "(FLENTRY.DIV_ID = DIVTAB.DIV_ID)"
+      cur3.execute(f'''select {val3} from {tab3} where {joi3} and date = {d2} GROUP BY DIVTAB.DIV_ID''')
+      rv3 = cur3.fetchall()
 
-      def sids_converter(o):
-            if isinstance(o, datetime.date):
-                  return str(o.year) + str("/") + str(o.month) + str("/") + str(o.day)
-
+      w = [i[0] for i in rv]
+      x = [i1[0] for i1 in rv1]
+      y = [i2[0] for i2 in rv2]
+      z = [i3[0] for i3 in rv3]
+      
+      q = zip(w,x,y,z)
       json_data = []
-      json_data.append(dict(zip(column_headers, rv)))
-      return json.dumps(json_data, default=sids_converter)
+      column_headers = ['Division','GL Today','GL Today LY','FineLeaf%']
+
+      for row in q:
+            json_data.append(dict(zip(column_headers, row)))
+      return json.dumps(json_data)
+
 
 
 #10##
@@ -382,29 +394,40 @@ def greenleaf():
 
 def gradepercent():
       cur = mysql.connection.cursor()
+      cur1 = mysql.connection.cursor()
+      cur2 = mysql.connection.cursor()
       # d1 = "'" + (str(request.args.get("start"))) + "'"
       # d2 = "'" + (str(request.args.get("end"))) + "'"
       d1 = "'2020-07-01'"
-      d2 = "'2020-07-02'"
+      d2 = "'2020-07-03'"
 
-      con = "TEAGRADETAB.TEAGRADE_NAME , SORTENTRY.SORT_KG"
-      fom = "ROUND((SUM(SORTENTRY.SORT_KG))/("
-      tab = "SORTENTRY , TEAGRADETAB"
-      joi = "SORTENTRY.TEAGRADE_ID = TEAGRADETAB.TEAGRADE_ID"
-      cur.execute(f'''select {con} , {fom}  from {tab} where {joi} and date >= {d1} and date <= {d2} group by MACHINETAB.MACH_NAME''')
+      cur.execute(f"SELECT SUM(SORTENTRY.SORT_KG) FROM SORTENTRY WHERE date >={d1} and date <={d2} ")
       rv = cur.fetchall()
 
-      row_headers = ['Machine', 'Fuel Used' , 'TM', 'TM/Fuel']
-      json_data = []
+      cur1.execute(f"SELECT SUM(SORTENTRY.SORT_KG) FROM SORTENTRY, TEAGRADETAB WHERE SORTENTRY.TEAGRADE_ID = TEAGRADETAB.TEAGRADE_ID and date >={d1} and date <={d2} group by TEAGRADETAB.TEAGRADE_NAME ")
+      rv1 = cur1.fetchall()
 
-      def sids_converter(o):
-            if isinstance(o, datetime.date):
-                  return str(o.year) + str("/") + str(o.month) + str("/") + str(o.day)
+      cur2.execute(f"SELECT TEAGRADETAB.TEAGRADE_NAME FROM SORTENTRY, TEAGRADETAB WHERE SORTENTRY.TEAGRADE_ID = TEAGRADETAB.TEAGRADE_ID and date >={d1} and date <={d2} group by TEAGRADETAB.TEAGRADE_NAME ")
+      rv2 = cur2.fetchall()
 
-      for row in rv:
-          json_data.append(dict(zip(row_headers,row)))
-      return json.dumps(json_data, default=sids_converter)
+      x = [s[0] for s in rv]
+      y = [i[0] for i in rv1]
+      w = [str(u[0]) for u in rv2]
 
+      z = []
+      for number in y:
+            z.append((round((number / x[0]),2)*100))
+
+      zz = zip(w,y,z)
+
+      json_data = []    
+      column_headers = ('Grade','Qnty','Percent')
+
+      for row in zz:
+            json_data.append(dict(zip(column_headers,row)))
+      return json.dumps(json_data)
+
+      
 #11
 @app.route('/invoicelist',methods=['GET', 'POST'])
 @cross_origin()
@@ -430,6 +453,54 @@ def invoicelist():
       return json.dumps(json_data, default=sids_converter)
 
 
+
+    
+#5test
+@app.route('/mnddeploy1',methods=['GET', 'POST'])
+@cross_origin()
+
+def mandaydeployment1():
+      cur = mysql.connection.cursor()
+      cur1 = mysql.connection.cursor()
+      d1 = "'2020-07-01'"
+      d2 = "'2020-07-04'"
+
+      con = "JOBTAB.JOB_NAME"
+      val = "SUM(FIELDENTRY.MND_VAL)"
+      tab = "FIELDENTRY,JOBTAB"
+      joi = "FIELDENTRY.JOB_ID=JOBTAB.JOB_ID"
+      cur.execute(f'''select {con} , {val} from {tab} where {joi} and date >={d1} and date <={d2} group by FIELDENTRY.JOB_ID''')
+      row_headers = ['Job_Name', 'Mandays']
+
+      rv = cur.fetchall()
+      json_data = []
+
+      for result in rv:
+            json_data.append(dict(zip(row_headers, result)))
+     
+      
+      con1 = "TEAGRADETAB.TEAGRADE_NAME, STOCKENTRY.KG_VAL"
+      tab1 = "STOCKENTRY, TEAGRADETAB"
+      joi1 = "(STOCKENTRY.TEAGRADE_ID = TEAGRADETAB.TEAGRADE_ID)"
+      cur1.execute(f'''select {con1} from {tab1} where {joi1} and DATE = {d1}''')
+      row_headers1 = ['Grade', 'Kg' ]
+      rv1 = cur1.fetchall()
+      json_data1 = []
+
+
+      for result in rv1:
+            json_data1.append(dict(zip(row_headers1, result)))
+      
+      jso = {}
+      jso['a'] = json_data
+      jso['b'] = json_data1
+
+      return json.dumps(jso)
+            
+
+
+      
+      
+
 if __name__ == "__main__":
     app.run(debug=True)
-
