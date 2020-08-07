@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-//componets
+// componets
 import { CultivationComponent } from './cultivation/cultivation.component';
 import { CultivationGrpComponent } from './cultivation-grp/cultivation-grp.component';
 import { PluckingComponent } from './plucking/plucking.component';
@@ -13,8 +13,8 @@ import { TeaMadeComponent } from './tea-made/tea-made.component';
 import { FineLeafComponent } from './fine-leaf/fine-leaf.component';
 import { GradePerComponent } from './grade-per/grade-per.component';
 import { InvoiceListComponent } from './invoice-list/invoice-list.component';
-import { WeatherComponent } from './weather/weather.component';
 import { UploadFileComponent } from './upload-file/upload-file.component';
+import { FactoryComponent } from './factory/factory.component';
 
 
 const routes: Routes = [
@@ -30,8 +30,8 @@ const routes: Routes = [
   { path: 'fineleaf', component: FineLeafComponent},
   { path: 'gradeper', component: GradePerComponent},
   { path: 'invoicelist', component: InvoiceListComponent},
-  { path: 'weather', component: WeatherComponent},
   { path: 'upload-csv', component: UploadFileComponent},
+  { path: 'factory', component: FactoryComponent},
 ];
 
 @NgModule({

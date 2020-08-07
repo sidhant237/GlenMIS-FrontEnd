@@ -20,8 +20,8 @@ import { TeaMadeComponent } from './tea-made/tea-made.component';
 import { FineLeafComponent } from './fine-leaf/fine-leaf.component';
 import { GradePerComponent } from './grade-per/grade-per.component';
 import { InvoiceListComponent } from './invoice-list/invoice-list.component';
-import { WeatherComponent } from './weather/weather.component';
 import { UploadFileComponent } from './upload-file/upload-file.component';
+import { FactoryComponent } from './factory/factory.component';
 
 @NgModule({
   declarations: [
@@ -37,8 +37,8 @@ import { UploadFileComponent } from './upload-file/upload-file.component';
     FineLeafComponent,
     GradePerComponent,
     InvoiceListComponent,
-    WeatherComponent,
-    UploadFileComponent
+    UploadFileComponent,
+    FactoryComponent
   ],
   imports: [
     BrowserModule,
