@@ -187,10 +187,10 @@ def pluckinggroup():
 
 def mandaydeployment():
       cur = mysql.connection.cursor()
-      #d1 = "'" + (str(request.args.get("start"))) + "'"
-      #d2 = "'" + (str(request.args.get("end"))) + "'"
-      d1 = "'2020-07-01'"
-      d2 = "'2020-07-04'"
+      d1 = "'" + (str(request.args.get("start"))) + "'"
+      d2 = "'" + (str(request.args.get("end"))) + "'"
+      #d1 = "'2020-07-01'"
+      #d2 = "'2020-07-04'"
 
       con = "JOBTAB.JOB_NAME"
       val = "SUM(FIELDENTRY.MND_VAL)"
@@ -247,8 +247,8 @@ def fuelreport():
 
 def teastock():
       cur = mysql.connection.cursor()
-      # d1 = "'" + (str(request.args.get("start"))) + "'"
-      d1 = "'2020-07-03'"
+      d1 = "'" + (str(request.args.get("start"))) + "'"
+      #d1 = "'2020-07-03'"
 
       con = "TEAGRADETAB.TEAGRADE_NAME, STOCKENTRY.KG_VAL"
       tab = "STOCKENTRY, TEAGRADETAB"
@@ -498,9 +498,163 @@ def mandaydeployment1():
       return json.dumps(jso)
             
 
+##################################
+#8
+@app.route('/factory', methods=['GET', 'POST'])
+@cross_origin()
+def displayfactory():
+      cur = mysql.connection.cursor()
+      cur1 = mysql.connection.cursor()
+      cur2 = mysql.connection.cursor()
+      cur3 = mysql.connection.cursor()
+      cur4 = mysql.connection.cursor()
+      rv = []
 
+      # d1 = "'" + (str(request.args.get("start"))) + "'"
+
+      d0 = "'2020-03-01'"  # start date current year
+      d00 = "'2019-03-01'"  # start date last year
+      d1 = "'2020-07-03'"  # current date
+      d11 = "'2019-07-02'"  # end date last year
+
+      # [TM TODAY]
+      val = "TMENTRY.TM_VAL "
+      tab = "TMENTRY"
+      cur.execute(f'''select {val} from {tab} where TM_DATE = {d1} ''')
+      rv.append(cur.fetchall()[0][0])
+
+      # [TM TODATE]
+      val1 = "sum(TMENTRY.TM_VAL)"
+      tab1 = "TMENTRY"
+      cur1.execute(f'''select {val1} from {tab1} where TM_DATE >= {d0} AND TM_DATE <= {d1} ''')
+      rv.append(cur1.fetchall()[0][0])
+
+      # [TM TODATE LAST YEAR]
+      val2 = "sum(TMENTRY.TM_VAL)"
+      tab2 = "TMENTRY"
+      cur2.execute(f'''select {val2} from {tab2} where TM_DATE >= {d00} AND TM_DATE <= {d11} ''')
+      rv.append(cur2.fetchall()[0][0])
+
+      # [RECOVERY % TODAY
+      val3 = " ROUND(SUM(FIELDENTRY.GL_VAL)/SUM(TMENTRY.TM_VAL),4) * 100 "
+      tab3 = "TMENTRY , FIELDENTRY"
+      joi3 = "(TMENTRY.TM_DATE = FIELDENTRY.DATE) and (TMENTRY.TM_DATE="
+      cur3.execute(f'''select {val3} from {tab3} where {joi3}{d1})''')
+      rv.append(cur3.fetchall()[0][0])
+
+      # [RECOVERY % TO DATE
+      val4 = " ROUND(SUM(FIELDENTRY.GL_VAL)/SUM(TMENTRY.TM_VAL),4) * 100 "
+      tab4 = 'TMENTRY , FIELDENTRY'
+      joi4 = "(TMENTRY.TM_DATE = FIELDENTRY.DATE) and (TMENTRY.TM_DATE>="
+      cur4.execute(f'''select {val4} from {tab4} where {joi4}{d0}) and (TMENTRY.TM_DATE<={d1})''')
+      rv.append(cur4.fetchall()[0][0])      
+
+      column_headers = ['TM Today', 'TM Todate', 'TM Todate LY', 'Recovery % Today', 'Recovery% Todate']
+      json_data = []
+      json_data.append(dict(zip(column_headers, rv)))
+
+
+
+#9## GREENLEAF
+
+      cura = mysql.connection.cursor()
+      cura1 = mysql.connection.cursor()
+      cura2 = mysql.connection.cursor()
+      cura3 = mysql.connection.cursor()
+      # d1 = "'" + (str(request.args.get("start"))) + "'"
+      # d11 = "'" + (str(request.args.get("end"))) + "'"
+      d1 = "'2020-07-01'"
+      d11 = "'2019-07-01'"
+      d2 = "'2020-07-03'"
+
+      #DIV NAME
+      vala = "DIVTAB.DIV_NAME"
+      taba = "DIVTAB, SECTAB, FIELDENTRY"
+      joia = "(FIELDENTRY.SEC_ID=SECTAB.SEC_ID) AND (SECTAB.DIV_ID = DIVTAB.DIV_ID)"
+      joba = "FIELDENTRY.JOB_ID = 1"
+      cura.execute(f'''select {vala} from {taba} where {joia} AND {joba} and date = {d1} GROUP BY SECTAB.DIV_ID''')
+      rva = cura.fetchall()
+
+      # GL TODAY
+      vala1 = "SUM(FIELDENTRY.GL_VAL)"
+      taba1 = "DIVTAB, SECTAB, FIELDENTRY"
+      joia1 = "(FIELDENTRY.SEC_ID=SECTAB.SEC_ID) AND (SECTAB.DIV_ID = DIVTAB.DIV_ID)"
+      joba1 = "FIELDENTRY.JOB_ID = 1"
+      cura1.execute(f'''select {vala1} from {taba1} where {joia1} AND {joba1} and date = {d1} GROUP BY SECTAB.DIV_ID''')
+      rva1 = cura1.fetchall()
+
+      #GL TODAY LAST YEA1R
+      vala2 = "SUM(FIELDENTRY.GL_VAL)"
+      taba2 = "FIELDENTRY, DIVTAB, SECTAB"
+      joia2 = "(FIELDENTRY.SEC_ID=SECTAB.SEC_ID) AND (SECTAB.DIV_ID = DIVTAB.DIV_ID)"
+      joba2 = "FIELDENTRY.JOB_ID = 1"
+      cura2.execute(f'''select {vala2} from {taba2} where {joia2} AND {joba2} and date = {d11} GROUP BY SECTAB.DIV_ID''')
+      rva2 = cura2.fetchall()
+
+      #FINE LEAF% TODAYS GL
+      vala3 = "sum(FL_PER)"
+      taba3 = "FLENTRY, DIVTAB"
+      joia3 = "(FLENTRY.DIV_ID = DIVTAB.DIV_ID)"
+      cura3.execute(f'''select {vala3} from {taba3} where {joia3} and date = {d2} GROUP BY DIVTAB.DIV_ID''')
+      rva3 = cura3.fetchall()
+
+      w = [i[0] for i in rva]
+      x = [i1[0] for i1 in rva1]
+      y = [i2[0] for i2 in rva2]
+      z = [i3[0] for i3 in rva3]
       
+      q = zip(w,x,y,z)
+      json_data1 = []
+      column_headers = ['Division','GL Today','GL Today LY','FineLeaf%']
+
+      for row in q:
+            json_data1.append(dict(zip(column_headers, row)))
       
+
+
+#10## GRADE PER
+
+      curb = mysql.connection.cursor()
+      curb1 = mysql.connection.cursor()
+      curb2 = mysql.connection.cursor()
+      # d1 = "'" + (str(request.args.get("start"))) + "'"
+      # d2 = "'" + (str(request.args.get("end"))) + "'"
+      d1 = "'2020-07-01'"
+      d2 = "'2020-07-03'"
+
+      curb.execute(f"SELECT SUM(SORTENTRY.SORT_KG) FROM SORTENTRY WHERE date >={d1} and date <={d2} ")
+      rvb = curb.fetchall()
+
+      curb1.execute(f"SELECT SUM(SORTENTRY.SORT_KG) FROM SORTENTRY, TEAGRADETAB WHERE SORTENTRY.TEAGRADE_ID = TEAGRADETAB.TEAGRADE_ID and date >={d1} and date <={d2} group by TEAGRADETAB.TEAGRADE_NAME ")
+      rvb1 = curb1.fetchall()
+
+      curb2.execute(f"SELECT TEAGRADETAB.TEAGRADE_NAME FROM SORTENTRY, TEAGRADETAB WHERE SORTENTRY.TEAGRADE_ID = TEAGRADETAB.TEAGRADE_ID and date >={d1} and date <={d2} group by TEAGRADETAB.TEAGRADE_NAME ")
+      rvb2 = curb2.fetchall()
+
+      xb = [s[0] for s in rvb]
+      yb = [i[0] for i in rvb1]
+      wb = [str(u[0]) for u in rvb2]
+
+      zb = []
+      for number in y:
+            zb.append((round((number / x[0]),2)*100))
+
+      zz = zip(wb,yb,zb)
+
+      json_data2 = []    
+      column_headers = ('Grade','Qnty','Percent')
+
+      for row in zz:
+            json_data2.append(dict(zip(column_headers,row)))
+
+
+      json_comp = {} 
+      json_comp['Tea Made'] = json_data
+      json_comp['Greenleaf'] = json_data1
+      json_comp['GradePer'] =json_data2
+      return json.dumps(json_comp)
+
+
 
 if __name__ == "__main__":
     app.run(debug=True)
