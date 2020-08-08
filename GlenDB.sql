@@ -97,7 +97,7 @@ CREATE TABLE `FLEntry` (
 
 LOCK TABLES `FLEntry` WRITE;
 /*!40000 ALTER TABLE `FLEntry` DISABLE KEYS */;
-INSERT INTO `FLEntry` VALUES (1,'2020-07-02 00:00:00',1,56),(2,'2020-07-02 00:00:00',2,59),(3,'2020-07-02 00:00:00',3,60),(4,'2020-07-02 00:00:00',1,58),(5,'2020-07-02 00:00:00',2,57),(6,'2020-07-02 00:00:00',3,61),(7,'2020-07-03 00:00:00',1,59),(8,'2020-07-03 00:00:00',2,62),(9,'2020-07-03 00:00:00',3,60);
+INSERT INTO `FLEntry` VALUES (1,'2020-07-01 00:00:00',1,57),(2,'2020-07-01 00:00:00',2,54),(3,'2020-07-01 00:00:00',3,59),(4,'2020-07-02 00:00:00',1,58),(5,'2020-07-02 00:00:00',2,57),(6,'2020-07-02 00:00:00',3,61),(7,'2020-07-03 00:00:00',1,59),(8,'2020-07-03 00:00:00',2,62),(9,'2020-07-03 00:00:00',3,60);
 /*!40000 ALTER TABLE `FLEntry` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -205,7 +205,7 @@ CREATE TABLE `Jobtab` (
 
 LOCK TABLES `Jobtab` WRITE;
 /*!40000 ALTER TABLE `Jobtab` DISABLE KEYS */;
-INSERT INTO `Jobtab` VALUES (1,'Plucking'),(2,'Spray Foliar'),(3,'Spray Pest'),(4,'Spray Weed'),(5,'Sickling'),(6,'Hand Weeding'),(7,'Manuring'),(8,'Factory'),(9,'Nursery'),(10,'Chowkidar'),(11,'Hospital'),(12,'Transport'),(13,'Creche'),(14,'Pruning-CA'),(15,'Pruning-DS'),(16,'Pruning'),(17,'Welfare'),(18,'Jugali'),(19,'Katawala'),(20,'Jugal'),(21,'Katawal'),(22,'Test1'),(23,'Test2');
+INSERT INTO `Jobtab` VALUES (1,'Plucking'),(2,'Spray Foliar'),(3,'Spray Pest'),(4,'Spray Weed'),(5,'Sickling'),(6,'Hand Weeding'),(7,'Manuring'),(8,'Factory'),(9,'Nursery'),(10,'Chowkidar'),(11,'Hospital'),(12,'Transport'),(13,'Creche'),(14,'Pruning-CA'),(15,'Pruning-DS'),(16,'Pruning'),(17,'Welfare'),(18,'Jugali'),(19,'Katawala'),(20,'Jugal'),(21,'Katawal'),(22,'Test1'),(23,'test3');
 /*!40000 ALTER TABLE `Jobtab` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -285,7 +285,7 @@ CREATE TABLE `SortEntry` (
 
 LOCK TABLES `SortEntry` WRITE;
 /*!40000 ALTER TABLE `SortEntry` DISABLE KEYS */;
-INSERT INTO `SortEntry` VALUES (1,'2020-07-02 00:00:00',1,140),(2,'2020-07-02 00:00:00',2,40),(3,'2020-07-02 00:00:00',3,20),(4,'2020-07-02 00:00:00',4,20),(5,'2020-07-02 00:00:00',5,20),(6,'2020-07-02 00:00:00',6,10),(7,'2020-07-03 00:00:00',1,130),(8,'2020-07-03 00:00:00',2,30),(9,'2020-07-03 00:00:00',3,25),(10,'2020-07-03 00:00:00',4,25),(11,'2020-07-03 00:00:00',5,20),(12,'2020-07-03 00:00:00',6,10);
+INSERT INTO `SortEntry` VALUES (1,'2020-07-01 00:00:00',1,140),(2,'2020-07-01 00:00:00',2,40),(3,'2020-07-01 00:00:00',3,20),(4,'2020-07-01 00:00:00',4,20),(5,'2020-07-01 00:00:00',5,20),(6,'2020-07-01 00:00:00',6,10),(7,'2020-07-03 00:00:00',1,130),(8,'2020-07-03 00:00:00',2,30),(9,'2020-07-03 00:00:00',3,25),(10,'2020-07-03 00:00:00',4,25),(11,'2020-07-03 00:00:00',5,20),(12,'2020-07-03 00:00:00',6,10);
 /*!40000 ALTER TABLE `SortEntry` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -448,4 +448,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-08-07 21:24:41
+-- Dump completed on 2020-08-08 13:59:53

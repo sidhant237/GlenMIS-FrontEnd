@@ -510,12 +510,12 @@ def displayfactory():
       cur4 = mysql.connection.cursor()
       rv = []
 
-      # d1 = "'" + (str(request.args.get("start"))) + "'"
-
-      d0 = "'2020-03-01'"  # start date current year
+      d1 = "'" + (str(request.args.get("start"))) + "'"
+      d0 = "'2020-07-01'"  # start date current year
       d00 = "'2019-03-01'"  # start date last year
-      d1 = "'2020-07-03'"  # current date
-      d11 = "'2019-07-02'"  # end date last year
+      #d1 = "'2020-07-01'"  # current date
+      d11 = "'2019-07-01'"  # end date last year
+      d2 = "'2020-07-01'"
 
       # [TM TODAY]
       val = "TMENTRY.TM_VAL "
@@ -549,23 +549,23 @@ def displayfactory():
       cur4.execute(f'''select {val4} from {tab4} where {joi4}{d0}) and (TMENTRY.TM_DATE<={d1})''')
       rv.append(cur4.fetchall()[0][0])      
 
-      column_headers = ['TM Today', 'TM Todate', 'TM Todate LY', 'Recovery % Today', 'Recovery% Todate']
+      column_headers =  ['TMToday', 'TMTodate', 'TMTodateLY', 'RecoveryToday', 'RecoveryTodate']
       json_data = []
       json_data.append(dict(zip(column_headers, rv)))
 
 
 
-#9## GREENLEAF
+#9## GREENLEAF FACTORY
 
       cura = mysql.connection.cursor()
       cura1 = mysql.connection.cursor()
       cura2 = mysql.connection.cursor()
       cura3 = mysql.connection.cursor()
+      
       # d1 = "'" + (str(request.args.get("start"))) + "'"
-      # d11 = "'" + (str(request.args.get("end"))) + "'"
-      d1 = "'2020-07-01'"
-      d11 = "'2019-07-01'"
-      d2 = "'2020-07-03'"
+      #d11 = "'" + (str(request.args.get("end"))) + "'"
+      
+      
 
       #DIV NAME
       vala = "DIVTAB.DIV_NAME"
@@ -595,7 +595,7 @@ def displayfactory():
       vala3 = "sum(FL_PER)"
       taba3 = "FLENTRY, DIVTAB"
       joia3 = "(FLENTRY.DIV_ID = DIVTAB.DIV_ID)"
-      cura3.execute(f'''select {vala3} from {taba3} where {joia3} and date = {d2} GROUP BY DIVTAB.DIV_ID''')
+      cura3.execute(f'''select {vala3} from {taba3} where {joia3} and date = {d1} GROUP BY DIVTAB.DIV_ID''')
       rva3 = cura3.fetchall()
 
       w = [i[0] for i in rva]
@@ -605,22 +605,22 @@ def displayfactory():
       
       q = zip(w,x,y,z)
       json_data1 = []
-      column_headers = ['Division','GL Today','GL Today LY','FineLeaf%']
+      column_headers = ['Division','GLToday','GLTodayLY','FineLeaf']
 
       for row in q:
             json_data1.append(dict(zip(column_headers, row)))
       
 
 
-#10## GRADE PER
+#10## GRADE PER FACTORY
 
       curb = mysql.connection.cursor()
       curb1 = mysql.connection.cursor()
       curb2 = mysql.connection.cursor()
       # d1 = "'" + (str(request.args.get("start"))) + "'"
       # d2 = "'" + (str(request.args.get("end"))) + "'"
-      d1 = "'2020-07-01'"
-      d2 = "'2020-07-03'"
+      #d1 = "'2020-07-01'"
+      
 
       curb.execute(f"SELECT SUM(SORTENTRY.SORT_KG) FROM SORTENTRY WHERE date >={d1} and date <={d2} ")
       rvb = curb.fetchall()
@@ -646,7 +646,6 @@ def displayfactory():
 
       for row in zz:
             json_data2.append(dict(zip(column_headers,row)))
-
 
       json_comp = {} 
       json_comp['Tea Made'] = json_data
