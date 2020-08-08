@@ -33,7 +33,7 @@ def cultivationdaily():
       cur.execute(f'''select {con} , {val} , {fom} , {con2} from {tab} where {joi} and date >={d1} and date <={d2} and {job}''')
       rv = cur.fetchall()
 
-      row_headers = ['Date', 'Job_Name', 'Section_Name', 'Squad_Name', 'Mandays', 'AreaCovered', 'Mnd/Area', 'Division']
+      row_headers = ['Date', 'Job_Name', 'Section_Name', 'Squad_Name', 'Mandays', 'AreaCovered', 'Mnd_Area', 'Division']
       json_data = []
 
       def sids_converter(o):
@@ -847,9 +847,9 @@ def dailyreport():
     cur1 = mysql.connection.cursor()
     cur2 = mysql.connection.cursor()
     cur3 = mysql.connection.cursor()
-    # d1 = "'" + (str(request.args.get("start"))) + "'"
+    d1 = "'" + (str(request.args.get("start"))) + "'"
     # d11 = "'" + (str(request.args.get("end"))) + "'"
-    d1 = "'2020-07-01'"
+    #d1 = "'2020-07-01'"
     d11 = "'2019-07-01'"
     
 
@@ -948,7 +948,7 @@ def dailyreport():
         if isinstance(o, datetime.date):
             return str(o.year) + str("/") + str(o.month) + str("/") + str(o.day)
 
-    column_headers = ['TM Today', 'TM Todate', 'TM Todate LY', 'Recovery % Today', 'Recovery% Todate']
+    column_headers =  ['TMToday', 'TMTodate', 'TMTodateLY', 'RecoveryToday', 'RecoveryTodate']
     json_data1 = []
     json_data1.append(dict(zip(column_headers, rv)))
     
@@ -984,7 +984,7 @@ def dailyreport():
 #3
 
     cur = mysql.connection.cursor()
-    d1 = "'2020-07-01'"
+    #d1 = "'2020-07-01'"
     #d1 = "'" + (str(request.args.get("start"))) + "'"
     
     con = "fieldentry.date,SECTAB.SEC_NAME,SQUTAB.SQU_NAME"
@@ -1014,7 +1014,7 @@ def dailyreport():
 
 
     cur = mysql.connection.cursor()
-    d1 = "'2020-07-01'"
+    #d1 = "'2020-07-01'"
     #d1 = "'" + (str(request.args.get("start"))) + "'"
 
     con = "FIELDENTRY.DATE, JOBTAB.JOB_NAME, SECTAB.SEC_NAME, SQUTAB.SQU_NAME"
@@ -1027,7 +1027,7 @@ def dailyreport():
     cur.execute(f'''select {con} , {val} , {fom} , {con2} from {tab} where {joi} and date ={d1} and {job}''')
     rv = cur.fetchall()
 
-    row_headers = ['Date', 'Job_Name', 'Section_Name', 'Squad_Name', 'Mandays', 'AreaCovered', 'Mnd/Area', 'Division']
+    row_headers = ['Date', 'Job_Name', 'Section_Name', 'Squad_Name', 'Mandays', 'AreaCovered', 'MndArea', 'Division']
     json_data4 = []
 
     def sids_converter(o):
