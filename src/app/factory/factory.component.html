@@ -1,10 +1,10 @@
 <mat-grid-list cols="3" rowHeight="90px">
     <mat-grid-tile colspan="1">
-      <h3>Plucking reports</h3>
+      <h3>Factory reports</h3>
     </mat-grid-tile>
     <mat-grid-tile colspan="2">
       <mat-form-field>
-        <input matInput [matDatepicker]="picker1" placeholder="Start Date" [value]="startdate" disabled
+        <input matInput [matDatepicker]="picker1" placeholder="Start Date" [value]="date" disabled
           (dateChange)="dateChange('startdate', $event)">
         <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
         <mat-datepicker #picker1 disabled="false"></mat-datepicker>
@@ -98,7 +98,7 @@
 
         <ng-container matColumnDef="Percent">
             <th mat-header-cell *matHeaderCellDef> Percent </th>
-            <td mat-cell *matCellDef="let element"> {{element.Percent}} </td>
+            <td mat-cell *matCellDef="let element"> {{element.Percent | number: '1.2-2' }} </td>
         </ng-container>
 
         <!-- header -->
