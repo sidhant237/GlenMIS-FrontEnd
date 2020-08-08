@@ -23,6 +23,7 @@ import { InvoiceListComponent } from './invoice-list/invoice-list.component';
 import { UploadFileComponent } from './upload-file/upload-file.component';
 import { FactoryComponent } from './factory/factory.component';
 import { SpinnerComponent } from './shared/spinner/spinner.component';
+import { DailyReportComponent } from './daily-report/daily-report.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { SpinnerComponent } from './shared/spinner/spinner.component';
     InvoiceListComponent,
     UploadFileComponent,
     FactoryComponent,
-    SpinnerComponent
+    SpinnerComponent,
+    DailyReportComponent
   ],
   imports: [
     BrowserModule,

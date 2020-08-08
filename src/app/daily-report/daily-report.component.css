@@ -1,0 +1,30 @@
+mat-form-field, button {
+    margin: 10px;
+}
+
+.example-container {
+  height: 350px;
+  overflow: auto;
+  width: 90%;
+  margin: auto;
+  margin-bottom: 20px;
+}
+
+.table-heading {
+  text-align: center !important;
+  padding: 100px 0px 10px 0px;
+}
+
+table {
+  width: 100%;
+  text-align: initial;
+}
+
+tr.mat-footer-row {
+  font-weight: bold;
+}
+
+.mat-table-sticky {
+  border-top: 1px solid #e0e0e0;
+}
+  

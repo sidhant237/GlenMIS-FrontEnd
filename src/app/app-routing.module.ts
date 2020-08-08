@@ -15,10 +15,12 @@ import { GradePerComponent } from './grade-per/grade-per.component';
 import { InvoiceListComponent } from './invoice-list/invoice-list.component';
 import { UploadFileComponent } from './upload-file/upload-file.component';
 import { FactoryComponent } from './factory/factory.component';
+import { DailyReportComponent } from './daily-report/daily-report.component';
 
 
 const routes: Routes = [
-  { path: '', redirectTo: '', pathMatch: 'full' },
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: 'home', component: DailyReportComponent },
   { path: 'cultdaily', component: CultivationComponent },
   { path: 'cultgroup', component: CultivationGrpComponent },
   { path: 'pluckdaily', component: PluckingComponent },
