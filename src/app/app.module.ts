@@ -22,6 +22,7 @@ import { GradePerComponent } from './grade-per/grade-per.component';
 import { InvoiceListComponent } from './invoice-list/invoice-list.component';
 import { UploadFileComponent } from './upload-file/upload-file.component';
 import { FactoryComponent } from './factory/factory.component';
+import { SpinnerComponent } from './shared/spinner/spinner.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { FactoryComponent } from './factory/factory.component';
     GradePerComponent,
     InvoiceListComponent,
     UploadFileComponent,
-    FactoryComponent
+    FactoryComponent,
+    SpinnerComponent
   ],
   imports: [
     BrowserModule,

@@ -16,10 +16,15 @@
                 </button>
             </div>
         </mat-grid-tile>
-        <mat-grid-tile colspan="2">
+        <mat-grid-tile colspan="2" *ngIf="!isUploading">
             <button mat-stroked-button (click)="uploadFileToServer()" [disabled]="!database">Upload</button>
         </mat-grid-tile>
+        <mat-grid-tile colspan="2" *ngIf="isUploading">
+            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        </mat-grid-tile>
     </mat-grid-list>
-
-    <button mat-flat-button color="primary" (click)="emailReportHandler()">Email Report</button>
+        <button mat-flat-button color="primary" (click)="emailReportHandler()" *ngIf="!isMailSending">Email Report</button>
+    <div class="email-controller" *ngIf="isMailSending">
+        <app-spinner></app-spinner>
+    </div>
 </div>

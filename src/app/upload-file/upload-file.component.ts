@@ -11,6 +11,8 @@ export class UploadFileComponent implements OnInit {
 
   fileToUpload: File = null;
   database: string;
+  isUploading = false;
+  isMailSending = false;
 
   constructor(private http: HttpClient, private snackBar: MatSnackBar) { }
 
@@ -22,13 +24,16 @@ export class UploadFileComponent implements OnInit {
   }
 
   uploadFileToServer() {
+    this.isUploading = true;
     const url = 'http://127.0.0.1:5000/upload?table=' + this.database;
     const formData: FormData = new FormData();
     formData.append('file', this.fileToUpload, this.fileToUpload.name);
     this.http.post(url, formData).subscribe(
       (result: Result) => {
+        this.isUploading = false;
         this.openSnackBar(result.message, 'Success');
       }, (error: Response) => {
+        this.isUploading = false;
         this.openSnackBar('Something went wrong', 'Error');
         console.log(error);
       }
@@ -42,11 +47,14 @@ export class UploadFileComponent implements OnInit {
   }
 
   emailReportHandler() {
+    this.isMailSending = true;
     const url = 'http://127.0.0.1:5000/email-report';
     this.http.post(url, {}).subscribe(
       result => {
+        this.isMailSending = false;
         this.openSnackBar('Email report generation initiated', 'success');
       }, error => {
+        this.isMailSending = false;
         this.openSnackBar('Something went wrong', 'Error');
       }
     );
