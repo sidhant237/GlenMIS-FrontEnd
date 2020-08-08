@@ -1,27 +1,32 @@
 .mat-drawer-container {
-    height: 90vh;
+    height: 92vh;
 }
 
 .toolbar-heading a {
     text-decoration: none;
-    color: black;
+    color: white;
 }
 
 .mat-nav-list {
-    background-color: #4caf50;
+    background-color: #70a452;
 }
- 
+
 .mat-toolbar-row {
     text-align: center;
 }
-/*
+
+.mat-list-base {
+    padding: 0 !important;
+}
+
 .mat-list-item {
-    color: black;
-} */
+    color: white;
+    font-weight: bolder;
+}
 
 .mat-list-item:hover {
     background-color: white;
-    color: black;
+    color: #70a452;
 }
 
 .mat-list-item.active {

@@ -1,11 +1,11 @@
 <mat-grid-list cols="3" rowHeight="90px">
     <mat-grid-tile colspan="1">
-      <h3>Factory reports</h3>
+      <h3>Daily Reports</h3>
     </mat-grid-tile>
     <mat-grid-tile colspan="2">
       <mat-form-field>
         <input matInput [matDatepicker]="picker1" placeholder="Start Date" [value]="startdate" disabled
-          (dateChange)="dateChange('startdate', $event)">
+          (dateChange)="dateChange('startdate', $event)" style="width: 100px !important;">
         <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
         <mat-datepicker #picker1 disabled="false"></mat-datepicker>
       </mat-form-field>
@@ -18,13 +18,13 @@
         <mat-datepicker #picker2 disabled="false"></mat-datepicker>
       </mat-form-field>
   
-      <button mat-raised-button color="primary" (click)="clickedGo()">Go</button>
+      <button mat-raised-button color="accent" (click)="clickedGo()">Go</button>
     </mat-grid-tile>
 </mat-grid-list>
 
 
 <h3 class="table-heading">Tea Made</h3>
-<div class="example-container mat-elevation-z8">
+<div class="example-container mat-elevation-z8 col-5">
     <table mat-table [dataSource]="teaMadeData">
 
         <ng-container matColumnDef="TMToday">
@@ -60,7 +60,7 @@
 </div>
 
 <h3 class="table-heading">Green Leaf Data</h3>
-<div class="example-container mat-elevation-z8">
+<div class="example-container mat-elevation-z8 col-5">
     <table mat-table [dataSource]="greenleafData">
 
         <ng-container matColumnDef="Division">
@@ -91,7 +91,7 @@
 </div>
 
 <h3 class="table-heading">Garde Per Data</h3>
-<div class="example-container mat-elevation-z8">
+<div class="example-container mat-elevation-z8 col-5">
     <table mat-table [dataSource]="gradePerData">
 
         <ng-container matColumnDef="Grade">
@@ -117,7 +117,7 @@
 </div>
 
 <h3 class="table-heading">Mandays Data</h3>
-<div class="example-container mat-elevation-z8">
+<div class="example-container mat-elevation-z8 col-5">
     <table mat-table [dataSource]="MandaysData">
 
         <ng-container matColumnDef="Job_Name">
@@ -272,7 +272,7 @@
 </div>
 
 <h3 class="table-heading">Fuel Report Data</h3>
-<div class="example-container mat-elevation-z8">
+<div class="example-container mat-elevation-z8 col-5">
     <table mat-table [dataSource]="FuelReportData">
 
         <!-- Position Column -->

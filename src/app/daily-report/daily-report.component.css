@@ -3,21 +3,33 @@ mat-form-field, button {
 }
 
 .example-container {
-  height: 350px;
+  max-height: 350px;
   overflow: auto;
-  width: 90%;
+  max-width: 90%;
   margin: auto;
   margin-bottom: 20px;
 }
 
+.col-5{
+  width: 65%;
+}
+
 .table-heading {
   text-align: center !important;
-  padding: 100px 0px 10px 0px;
 }
 
 table {
   width: 100%;
   text-align: initial;
+}
+
+th {
+  font-weight: bold;
+  color: black;
+}
+
+.mat-form-field {
+  width: 130px !important;
 }
 
 tr.mat-footer-row {
