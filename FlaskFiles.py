@@ -52,10 +52,9 @@ def cultivationgroup():
       cur = mysql.connection.cursor()
       d1 = "'" + (str(request.args.get("start"))) + "'"
       d2 = "'" + (str(request.args.get("end"))) + "'"
-      grp = "'" + (str(request.args.get("grpby"))) + "'"
       #d1 = "'2020-07-01'"
       #d2 = "'2020-07-14'"
-      #grp = "section"
+      
 
       if grp == "'job'":
             con = "JOBTAB.JOB_NAME"
@@ -68,17 +67,6 @@ def cultivationgroup():
             cur.execute(f'''select {con} , {val} , {val1} , {fom}  from {tab} where {joi} and date >={d1} and date <={d2} and {job} group by FIELDENTRY.JOB_ID''')
             rv = cur.fetchall()
             row_headers = ['Job_Name', 'Mandays', 'AreaCovered', 'MndArea']
-
-      elif grp == "'section'":
-            con = "SECTAB.SEC_NAME"
-            val = "sum(FIELDENTRY.MND_VAL)"
-            val1 = "sum(FIELDENTRY.AREA_VAL)"
-            fom = "ROUND((SUM(FIELDENTRY.MND_VAL))/(SUM(FIELDENTRY.AREA_VAL)),2)"
-            tab = "FIELDENTRY,SQUTAB,JOBTAB,SECTAB,DIVTAB"
-            joi = "FIELDENTRY.SQU_ID = SQUTAB.SQU_ID AND FIELDENTRY.JOB_ID=JOBTAB.JOB_ID AND FIELDENTRY.SEC_ID=SECTAB.SEC_ID AND DIVTAB.DIV_ID=SECTAB.DIV_ID"
-            cur.execute(f'''select {con} , {val} , {val1} , {fom}  from {tab} where {joi} and date >={d1} and date <={d2} group by FIELDENTRY.SEC_ID''')
-            rv = cur.fetchall()
-            row_headers = ['Section_Name', 'Mandays', 'AreaCovered', 'MndArea']
 
       json_data = []
 
@@ -102,16 +90,16 @@ def pluckingdaily():
       d1 = "'" + (str(request.args.get("start"))) + "'"
       d2 = "'" + (str(request.args.get("end"))) + "'"
 
-      con = "fieldentry.date,SECTAB.SEC_NAME,SQUTAB.SQU_NAME"
+      con = "fieldentry.date, DIVTAB.DIV_NAME, SECTAB.SEC_NAME,SQUTAB.SQU_NAME"
       val = "FIELDENTRY.MND_VAL, FIELDENTRY.GL_VAL, FIELDENTRY.AREA_VAL"
       fom = "ROUND((GL_VAL/MND_VAL),2), ROUND((GL_VAL/AREA_VAL),2),ROUND((MND_VAL/AREA_VAL),2)"
-      con2 = "DIVTAB.DIV_NAME, SECTAB.SEC_PRUNE , SECTAB.SEC_JAT, SECTAB.SEC_AREA"
+      con2 = "SECTAB.SEC_PRUNE , SECTAB.SEC_JAT, SECTAB.SEC_AREA"
       tab = "FIELDENTRY,SQUTAB,JOBTAB,SECTAB,DIVTAB"
       joi = "FIELDENTRY.SQU_ID = SQUTAB.SQU_ID AND FIELDENTRY.JOB_ID=JOBTAB.JOB_ID AND FIELDENTRY.SEC_ID=SECTAB.SEC_ID AND DIVTAB.DIV_ID=SECTAB.DIV_ID"
       job = "(FIELDENTRY.JOB_ID = 1 )"
       cur.execute(f'''select {con} , {val} , {fom} , {con2} from {tab} where {joi} and date >={d1} and date <={d2} and {job}''')
 
-      row_headers = ['Date', 'Section_Name', 'Squad_Name', 'Mandays', 'Greenleaf', 'AreaCovered', 'GlMnd', 'GlHa', 'MndHa','Division','Prune','Jat', "SecArea"]
+      row_headers = ['Date', 'Division','Section_Name', 'Squad_Name', 'Mandays', 'Greenleaf', 'AreaCovered', 'GlMnd', 'GlHa', 'MndHa','Prune','Jat', "SecArea"]
       rv = cur.fetchall()
       json_data = []
 
@@ -436,11 +424,11 @@ def invoicelist():
       cur = mysql.connection.cursor()
 
       con = "INVOICEENTRY.INVOICE_NO, TEAGRADETAB.TEAGRADE_NAME"
-      val = "INVOICEENTRY.NET_WT , INVOICEENTRY.PAPERSACKS, INVOICEENTRY.PACKDATE,INVOICEENTRY.DISPATCHDATE"
+      val = "INVOICEENTRY.NET_WT , INVOICEENTRY.PAPERSACKS, INVOICEENTRY.PACKDATEE"
       tab = "INVOICEENTRY,TEAGRADETAB"
       joi = "INVOICEENTRY.TEAGRADE_ID=TEAGRADETAB.TEAGRADE_ID"
       cur.execute(f'''select {con} , {val} from {tab} where {joi}''')
-      row_headers = ['InvNo','Grade', 'NetWt','Papersacks','Packdate','DispatchDate']
+      row_headers = ['InvNo','Grade', 'NetWt','Papersacks','Packdate']
       rv = cur.fetchall()
       json_data = []
 
