@@ -9,7 +9,6 @@ import { HttpClient } from '@angular/common/http';
 })
 export class DailyReportComponent implements OnInit {
   startdate: any;
-  enddate: any;
   teaMadeColumns: string[];
   greenLeafColumns: string[];
   GradePerColumns: string[];
@@ -31,18 +30,17 @@ export class DailyReportComponent implements OnInit {
 
   ngOnInit() {
     this.startdate = new Date();
-    this.enddate = new Date();
     this.startdate.setDate(this.startdate.getDate() - 1);
     this.teaMadeColumns = ['TMToday', 'TMTodate', 'TMTodateLY', 'RecoveryToday', 'RecoveryTodate'];
     this.greenLeafColumns = ['Division', 'GLToday', 'GLTodayLY', 'FineLeaf'];
     this.GradePerColumns = ['Grade', 'Qnty', 'Percent'];
     this.MandaysColumns = ['Job_Name', 'Mandays'];
-    this.PluckingColumns = ['Date', 'Section_Name', 'Squad_Name', 'Mandays', 'Greenleaf', 'AreaCovered',
-                            'GlMnd', 'GlHa', 'MndHa', 'Division', 'Prune', 'Jat', 'SecArea'];
-    this.CultivationColumns = ['Date', 'AreaCovered', 'Division', 'Job_Name', 'Mandays', 'Mnd/Area', 'Section_Name', 'Squad_Name'];
+    this.PluckingColumns = ['Division', 'Date', 'Section_Name', 'Squad_Name', 'Mandays', 'Greenleaf', 'AreaCovered',
+                            'GlMnd', 'GlHa', 'MndHa', 'Prune', 'Jat', 'SecArea'];
+    this.CultivationColumns = ['Division', 'Date', 'AreaCovered', 'Job_Name', 'Mandays', 'Mnd/Area', 'Section_Name', 'Squad_Name'];
     this.FuelReportColumns = ['Machine', 'FuelUsed', 'TM', 'TMFuel'];
 
-    const url = 'http://127.0.0.1:5000/dailyreport?start=' + this.convert(this.startdate) + '&end=' + this.convert(this.enddate);
+    const url = 'http://127.0.0.1:5000/dailyreport?start=' + this.convert(this.startdate);
     this.http.get(url).subscribe((data: DailyReport) => {
       this.teaMadeData = data.TeaMade;
       this.greenleafData = data.Greenleaf;
@@ -55,7 +53,7 @@ export class DailyReportComponent implements OnInit {
   }
 
   clickedGo() {
-    const url = 'http://127.0.0.1:5000/dailyreport?start=' + this.convert(this.startdate) + '&end=' + this.convert(this.enddate);
+    const url = 'http://127.0.0.1:5000/dailyreport?start=' + this.convert(this.startdate);
     this.http.get(url).subscribe((data: DailyReport) => {
       this.teaMadeData = data.TeaMade;
       this.greenleafData = data.Greenleaf;
@@ -68,9 +66,14 @@ export class DailyReportComponent implements OnInit {
   }
 
   dateChange(type: string, event: MatDatepickerInputEvent<Date>) {
-    switch (type) {
-      case 'startdate': this.startdate = event.value; break;
-      case 'enddate': this.enddate = event.value; break;
+      this.startdate = event.value;
+  }
+
+  getTotal(_dataSrc: string, _field: string) {
+    if (this[_dataSrc]) {
+      return this[_dataSrc].map(t => t[_field]).reduce((acc, value) => acc + value, 0);
+    } else {
+      return null;
     }
   }
 
