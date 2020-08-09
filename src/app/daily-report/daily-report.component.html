@@ -1,8 +1,8 @@
 <mat-grid-list cols="3" rowHeight="90px" class="example-container col-5">
-    <mat-grid-tile colspan="1">
+    <mat-grid-tile [colspan]="stackGrid ? 3 : 1">
       <h3>Daily Reports</h3>
     </mat-grid-tile>
-    <mat-grid-tile colspan="2">
+    <mat-grid-tile [colspan]="stackGrid ? 3 : 2">
       <mat-form-field>
         <input matInput [matDatepicker]="picker1" placeholder="Start Date" [value]="startdate" disabled
           (dateChange)="dateChange('startdate', $event)" style="width: 100px !important;">
@@ -153,8 +153,8 @@
 </div>
 
 <h3 class="table-heading">Plucking Data</h3>
-<div class="example-container mat-elevation-z8 col-10">
-    <table mat-table [dataSource]="PluckingData">
+<div class="example-container mat-elevation-z8">
+    <table mat-table [dataSource]="PluckingData" class="col-10">
 
         <ng-container matColumnDef="Division">
             <th mat-header-cell *matHeaderCellDef> Division </th>
@@ -246,7 +246,7 @@
 
 <h3 class="table-heading">Cultivation Data</h3>
 <div class="example-container mat-elevation-z8">
-    <table mat-table [dataSource]="CultivationData">
+    <table mat-table [dataSource]="CultivationData" class="col-10">
 
         <ng-container matColumnDef="Division">
             <th mat-header-cell *matHeaderCellDef> Division </th>

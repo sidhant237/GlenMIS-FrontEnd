@@ -1,13 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { HttpClient } from '@angular/common/http';
+import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-daily-report',
   templateUrl: './daily-report.component.html',
   styleUrls: ['./daily-report.component.css']
 })
-export class DailyReportComponent implements OnInit {
+export class DailyReportComponent implements OnInit, OnDestroy {
   startdate: any;
   teaMadeColumns: string[];
   greenLeafColumns: string[];
@@ -24,8 +26,11 @@ export class DailyReportComponent implements OnInit {
   PluckingData: any;
   CultivationData: any;
   FuelReportData: any;
+  stackGrid = false;
 
-  constructor(private http: HttpClient) {
+  mediaSubscription: Subscription;
+
+  constructor(private http: HttpClient, private breakPointObserver: BreakpointObserver) {
   }
 
   ngOnInit() {
@@ -49,6 +54,24 @@ export class DailyReportComponent implements OnInit {
       this.PluckingData = data.Plucking;
       this.CultivationData = data.Cultivation;
       this.FuelReportData = data.FuelReport;
+    });
+
+    this.mediaWidthHandler();
+  }
+
+  ngOnDestroy() {
+    this.mediaSubscription.unsubscribe();
+  }
+
+  mediaWidthHandler() {
+    this.mediaSubscription = this.breakPointObserver.observe([
+      '(max-width: 700px)'
+        ]).subscribe(result => {
+          if (result.matches === true) {
+            this.stackGrid = true;
+          } else {
+            this.stackGrid = false;
+          }
     });
   }
 
