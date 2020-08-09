@@ -35,9 +35,9 @@ export class DailyReportComponent implements OnInit {
     this.greenLeafColumns = ['Division', 'GLToday', 'GLTodayLY', 'FineLeaf'];
     this.GradePerColumns = ['Grade', 'Qnty', 'Percent'];
     this.MandaysColumns = ['Job_Name', 'Mandays'];
-    this.PluckingColumns = ['Division', 'Date', 'Section_Name', 'Squad_Name', 'Mandays', 'Greenleaf', 'AreaCovered',
+    this.PluckingColumns = ['Date', 'Division', 'Section_Name', 'Squad_Name', 'Mandays', 'Greenleaf', 'AreaCovered',
                             'GlMnd', 'GlHa', 'MndHa', 'Prune', 'Jat', 'SecArea'];
-    this.CultivationColumns = ['Division', 'Date', 'AreaCovered', 'Job_Name', 'Mandays', 'Mnd/Area', 'Section_Name', 'Squad_Name'];
+    this.CultivationColumns = ['Date', 'Division', 'AreaCovered', 'Job_Name', 'Mandays', 'Mnd/Area', 'Section_Name', 'Squad_Name'];
     this.FuelReportColumns = ['Machine', 'FuelUsed', 'TM', 'TMFuel'];
 
     const url = 'http://127.0.0.1:5000/dailyreport?start=' + this.convert(this.startdate);
