@@ -24,7 +24,7 @@ export class CultivationComponent implements OnInit {
 		this.startdate.setDate(this.startdate.getDate() - 1);
 		this.startdateCmp = this.startdate;
 		this.enddateCmp = this.enddate;
-		this.displayedColumns = ['Division', 'Date', 'AreaCovered', 'Job_Name', 'Mandays', 'Mnd/Area', 'Section_Name', 'Squad_Name'];
+		this.displayedColumns = ['Date', 'Division', 'AreaCovered', 'Job_Name', 'Mandays', 'Mnd/Area', 'Section_Name', 'Squad_Name'];
 
 		const url = 'http://127.0.0.1:5000/cultdaily?start=' + this.convert(this.startdate) + '&end=' + this.convert(this.enddate);
 		//dev purpose
