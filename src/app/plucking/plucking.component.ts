@@ -27,20 +27,8 @@ export class PluckingComponent implements OnInit {
     this.startdateCmp = this.startdate;
     this.enddateCmp = this.enddate;
     this.showCompare = false;
-    this.displayedColumns = [
-                              'Date',
-                              'Section_Name',
-                              'Squad_Name',
-                              'Mandays',
-                              'Greenleaf',
-                              'AreaCovered',
-                              'GlMnd',
-                              'GlHa',
-                              'MndHa',
-                              'Division',
-                              'Prune',
-                              'Jat',
-                              'SecArea'];
+    this.displayedColumns = [ 'Date', 'Division', 'Section_Name', 'Squad_Name', 'Mandays', 'Greenleaf',
+                              'AreaCovered', 'GlMnd', 'GlHa', 'MndHa', 'Prune', 'Jat', 'SecArea'];
 
     const url = 'http://127.0.0.1:5000/pluckdaily?start=' + this.convert(this.startdate) + '&end=' + this.convert(this.enddate);
     this.http.get(url).subscribe((data: Plucking) => {
