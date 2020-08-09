@@ -1,0 +1,61 @@
+#1 -- /CultDaily -- d1,d2
+['Date', 'Job_Name', 'Division', 'Section_Name', 'Squad_Name', 'Mandays', 'AreaCovered', 'Mnd_Area']
+
+#2 -- /CultGroup -- d1 , d2
+['Job_Name', 'Mandays', 'AreaCovered', 'MndArea']
+
+#3 -- /PluckDaily -- d1 , d2
+['Date', 'Division','Section_Name', 'Squad_Name', 'Mandays', 'Greenleaf', 'AreaCovered', 'GlMnd', 'GlHa', 'MndHa','PluckInterval''Prune','Jat']
+
+#4 -- /pluckgroup -- d1,d2,grpby
+>Section - ['Section_Name', 'Mandays', 'Greenleaf', 'AreaCovered', 'GLMnd', 'GLArea', 'MndArea']
+>Division - ['Division', 'Mandays', 'Greenleaf', 'AreaCovered', 'GLMnd', 'GLArea', 'MndArea']
+>Squad - ['Squad', 'Mandays', 'Greenleaf', 'AreaCovered', 'GLMnd', 'GLArea', 'MndArea']
+
+#5 -- /mnddeploy -- d1,d2
+['Job_Name', 'Mandays']
+
+#6 -- /fuelreport -- d1,d2
+['Machine', 'FuelUsed' , 'TM', 'TMFuel']
+
+#7 teastock left out #NO REPORT #7
+
+#8 tbcompleted##LYDATEPICKER##
+['TM Today', 'TM Todate', 'TM Todate LY', 'Recovery % Today', 'Recovery% Todate']
+
+#9 -- /GL  ##LYDATEPICKER##
+['Division','GLToday','GLTodayLY','FineLeaf']
+
+#10 #PART OF FACTORY#ENDPOINTS FINAL:
+['Grade','PercentToday','PercentTodate']
+
+#11 -- /invoicelist -- d1,d2
+['InvNo','Grade', 'NetWt','Papersacks','Packdate']
+
+#12 -- /factory -- d1 (also need LYDATEPICKER)
+json_comp['TeaMade'] = json_data --- ['TMToday', 'TMTodate', 'TMTodateLY', 'RecoveryToday', 'RecoveryTodate']
+json_comp['Greenleaf'] = json_data1 --- ['Division','GLToday','GLTodayLY','FineLeaf']
+json_comp['GradePer'] =json_data2 --- ['Grade','PercentToday','PercentTodate'] >>>headers have to be updated
+return json.dumps(json_comp)
+
+#13 -- /dailyreport - d1 (also need LYDATEPICKER)
+
+json_final['Greenleaf'] = json_data
+json_final['TeaMade'] = json_data1 --- ['TMToday', 'TMTodate', 'TMTodateLY', 'RecoveryToday', 'RecoveryTodate']
+json_final['Mandays'] = json_data2 --- ['Job_Name', 'Mandays']
+json_final['Plucking'] = json_data3 --- ['Date', 'Division','Section_Name', 'Squad_Name', 'Mandays', 'Greenleaf', 'AreaCovered', 'GlMnd', 'GlHa', 'MndHa','PluckInterval''Prune','Jat']
+json_final['Cultivation'] = json_data4 --- ['Date', 'Job_Name','Division','Section_Name', 'Squad_Name', 'Mandays', 'AreaCovered', 'MndArea' ]
+json_final['GradePer'] = json_data5 --- ['Grade','PercentToday','PercentTodate'] >>>headers have to be updated
+json_final['FuelReport'] = json_data6 --- ['Machine', 'FuelUsed' , 'TM', 'TMFuel']
+
+#14 -- /email -- d1
+
+json_submit['Greenleaf'] = json_data --- 
+##change needed in grade % ##
+json_submit['Tea Made'] = json_data1
+json_submit['Grade Percent'] = json_data2
+json_submit['Mandays'] = json_data3 --- ['Job_Name', 'Mandays']
+
+
+
+
