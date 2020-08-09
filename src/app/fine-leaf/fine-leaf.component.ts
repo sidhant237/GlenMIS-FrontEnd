@@ -15,7 +15,6 @@ export class FineLeafComponent implements OnInit {
   displayedColumns: string[];
   dataSource: any;
   dataSourceCmp: any;
-  showCompare: boolean;
 
   constructor(private http: HttpClient) {
   }
@@ -26,7 +25,6 @@ export class FineLeafComponent implements OnInit {
     this.startdate.setDate(this.startdate.getDate() - 1);
     this.startdateCmp = this.startdate;
     this.enddateCmp = this.enddate;
-    this.showCompare = false;
     this.displayedColumns = ['Division', 'GLToday', 'GLTodayLY', 'FineLeaf'];
 
     const url = 'http://127.0.0.1:5000/GL?start=' + this.convert(this.startdate) + '&end=' + this.convert(this.enddate);
@@ -40,10 +38,6 @@ export class FineLeafComponent implements OnInit {
     this.http.get(url).subscribe((data: GreenLeaf) => {
       this.dataSource = data;
     });
-  }
-
-  clickedCompare() {
-    this.showCompare = true;
   }
 
   clickedGoCompare() {
@@ -68,6 +62,15 @@ export class FineLeafComponent implements OnInit {
     day = ("0" + date.getDate()).slice(-2);
     return [date.getFullYear(), mnth, day].join("-").toString();
   }
+
+  getTotal(_dataSrc: string, _field: string) {
+    if (this[_dataSrc]) {
+      return this[_dataSrc].map(t => t[_field]).reduce((acc, value) => acc + value, 0);
+    } else {
+      return null;
+    }
+  }
+  
 }
 
 export interface GreenLeaf {
