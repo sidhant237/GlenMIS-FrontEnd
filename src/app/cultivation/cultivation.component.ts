@@ -9,7 +9,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class CultivationComponent implements OnInit {
 
-	startdate; enddate; startdateCmp; enddateCmp; displayedColumns; dataSource; dataSourceCmp; showCompare;
+	startdate; enddate; startdateCmp; enddateCmp; displayedColumns; dataSource; dataSourceCmp;
 
 	//dev purpose
 	//_startdate = '2020-07-01';
@@ -24,8 +24,7 @@ export class CultivationComponent implements OnInit {
 		this.startdate.setDate(this.startdate.getDate() - 1);
 		this.startdateCmp = this.startdate;
 		this.enddateCmp = this.enddate;
-		this.showCompare = false;
-		this.displayedColumns = ['Date', 'AreaCovered', 'Division', 'Job_Name', 'Mandays', 'Mnd/Area', 'Section_Name', 'Squad_Name'];
+		this.displayedColumns = ['Division', 'Date', 'AreaCovered', 'Job_Name', 'Mandays', 'Mnd/Area', 'Section_Name', 'Squad_Name'];
 
 		const url = 'http://127.0.0.1:5000/cultdaily?start=' + this.convert(this.startdate) + '&end=' + this.convert(this.enddate);
 		//dev purpose
@@ -42,10 +41,6 @@ export class CultivationComponent implements OnInit {
 		this.http.get(url).subscribe((data: ICultivation) => {
 			this.dataSource = data;
 		});
-	}
-
-	clickedCompare() {
-		this.showCompare = true;
 	}
 
 	clickedGoCompare() {
