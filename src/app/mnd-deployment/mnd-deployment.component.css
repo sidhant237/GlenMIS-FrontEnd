@@ -13,14 +13,15 @@ h3 {
 .example-container {
   padding: 5px 10px;
   box-sizing: border-box;
-  overflow: auto;
-  height: 85vh;
-  width: 90%;
+  max-height: 75vh;
+  width: 75%;
   margin-bottom: 20px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 .control-wrap {
@@ -31,11 +32,18 @@ h3 {
 
 .mat-table {
   width: 90%;
+  max-height: 350px;
 }
 
 table {
   width: 100%;
   text-align: initial;
+}
+
+th {
+  font-weight: bold;
+  color: black;
+  background-color: #c0c0c0;
 }
 
 tr.mat-footer-row {
@@ -44,4 +52,5 @@ tr.mat-footer-row {
 
 .mat-table-sticky {
   border-top: 1px solid #e0e0e0;
+  background-color: #c0c0c0;
 }
