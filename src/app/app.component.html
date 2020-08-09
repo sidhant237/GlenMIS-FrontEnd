@@ -1,12 +1,15 @@
 <mat-toolbar color="primary" style="min-height: 50px !important; height: 50px !important;">
   <mat-toolbar-row>
+    <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon" (click)="drawer.toggle()" *ngIf="hideSideDrawer">
+      <mat-icon>menu</mat-icon>
+    </button>
     <h1 class="toolbar-heading">
       <a [routerLink]="'/home'" [routerLinkActive]="['active']" >Glenburn MIS</a>
     </h1>
   </mat-toolbar-row>
 </mat-toolbar>
 <mat-sidenav-container>
-  <mat-sidenav mode="side" opened>
+  <mat-sidenav #drawer [mode]="hideSideDrawer ? 'over' : 'side'" [opened] = "hideSideDrawer ? false : true ">
     <mat-nav-list>
       <a mat-list-item [routerLink]="'/home'" [routerLinkActive]="['active']"> Daily Report </a>
       <a mat-list-item [routerLink]="'/cultdaily'" [routerLinkActive]="['active']"> Cultivation </a>

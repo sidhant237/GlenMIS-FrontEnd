@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
+import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
+import { Subscription } from 'rxjs';
 
 export interface FuelReport {
   Machine: string;
@@ -14,7 +16,7 @@ export interface FuelReport {
   templateUrl: './fuel-report.component.html',
   styleUrls: ['./fuel-report.component.css']
 })
-export class FuelReportComponent implements OnInit {
+export class FuelReportComponent implements OnInit, OnDestroy {
   displayedColumns: string[] = ['Machine', 'FuelUsed', 'TM', 'TMFuel'];
   dataSource: FuelReport[];
   startdate: any;
@@ -23,7 +25,11 @@ export class FuelReportComponent implements OnInit {
   enddateCmp: any;
   dataSourceCmp: FuelReport[];
 
-  constructor(private http: HttpClient) { }
+  mediumDevice = false;
+
+  mediaSubscription: Subscription;
+
+  constructor(private http: HttpClient, private breakPointObserver: BreakpointObserver) { }
 
   ngOnInit() {
     this.startdate = new Date();
@@ -35,6 +41,23 @@ export class FuelReportComponent implements OnInit {
     const url = 'http://127.0.0.1:5000/fuelreport?start=' + this.convert(this.startdate) + '&end=' + this.convert(this.enddate);
     this.http.get(url).subscribe((data: FuelReport[]) => {
       this.dataSource = data;
+    });
+    this.mediaChangeHandler();
+  }
+
+  ngOnDestroy() {
+    this.mediaSubscription.unsubscribe();
+  }
+
+  mediaChangeHandler() {
+    this.mediaSubscription = this.breakPointObserver.observe([
+      '(max-width: 768px)'
+        ]).subscribe(result => {
+          if (result.matches === true) {
+            this.mediumDevice = true;
+          } else {
+            this.mediumDevice = false;
+          }
     });
   }
 
