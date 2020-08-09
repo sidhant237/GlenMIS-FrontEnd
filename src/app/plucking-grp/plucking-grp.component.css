@@ -3,11 +3,15 @@ mat-form-field, button {
 }
 
 .example-container {
-  height: 350px;
+  max-height: 350px;
   overflow: auto;
-  width: 90%;
+  max-width: 90%;
   margin: auto;
   margin-bottom: 20px;
+}
+
+.col-5{
+  width: 65%;
 }
 
 table {
@@ -15,11 +19,18 @@ table {
   text-align: initial;
 }
 
+th {
+  font-weight: bold;
+  color: black;
+  background-color: #c0c0c0;
+}
+
 tr.mat-footer-row {
   font-weight: bold;
 }
 
 .mat-table-sticky {
+  background-color: #c0c0c0;
   border-top: 1px solid #e0e0e0;
 }
   

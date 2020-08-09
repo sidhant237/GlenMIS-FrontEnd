@@ -64,10 +64,6 @@ export class PluckingGrpComponent implements OnInit {
     });
   }
 
-  clickedCompare() {
-    this.showCompare = true;
-  }
-
   clickedGoCompare() {
     const url = 'http://127.0.0.1:5000/pluckgroup?start=' + this.convert(this.startdateCmp) + '&end=' + this.convert(this.enddateCmp) + '&grpby=' + this.selectedCmp;
     this.http.get(url).subscribe((data: any) => {
@@ -99,6 +95,14 @@ export class PluckingGrpComponent implements OnInit {
     mnth = ("0" + (date.getMonth() + 1)).slice(-2),
     day = ("0" + date.getDate()).slice(-2);
     return [date.getFullYear(), mnth, day].join("-").toString();
+  }
+
+  getTotal(_dataSrc: string, _field: string) {
+    if (this[_dataSrc]) {
+      return this[_dataSrc].map(t => t[_field]).reduce((acc, value) => acc + value, 0);
+    } else {
+      return null;
+    }
   }
 
   parseDivisionData(type: string, data: PluckingGroupByDivision) {
