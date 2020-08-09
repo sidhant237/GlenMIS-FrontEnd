@@ -10,7 +10,6 @@ import { HttpClient } from '@angular/common/http';
 })
 export class TeaStockComponent implements OnInit {
   startdate: any;
-  enddate: any;
   displayedColumns: string[];
   dataSource: TeaStock;
 
@@ -19,28 +18,24 @@ export class TeaStockComponent implements OnInit {
 
   ngOnInit() {
     this.startdate = new Date();
-    this.enddate = new Date();
     this.startdate.setDate(this.startdate.getDate() - 1);
     this.displayedColumns = ['Grade', 'Kg' ];
 
-    const url = 'http://127.0.0.1:5000/teastock?start=' + this.convert(this.startdate) + '&end=' + this.convert(this.enddate);
+    const url = 'http://127.0.0.1:5000/teastock?start=' + this.convert(this.startdate);
     this.http.get(url).subscribe((data: TeaStock) => {
     this.dataSource = data;
     });
   }
 
   clickedGo() {
-    const url = 'http://127.0.0.1:5000/teastock?start=' + this.convert(this.startdate) + '&end=' + this.convert(this.enddate);
+    const url = 'http://127.0.0.1:5000/teastock?start=' + this.convert(this.startdate);
     this.http.get(url).subscribe((data: TeaStock) => {
       this.dataSource = data;
     });
   }
 
   dateChange(type: string, event: MatDatepickerInputEvent<Date>) {
-    switch (type) {
-      case 'startdate': this.startdate = event.value; break;
-      case 'enddate': this.enddate = event.value; break;
-    }
+      this.startdate = event.value;
   }
 
   convert(str) {
@@ -49,6 +44,14 @@ export class TeaStockComponent implements OnInit {
     day = ("0" + date.getDate()).slice(-2);
     return [date.getFullYear(), mnth, day].join("-").toString();
     }
+    
+  getTotal(_dataSrc: string, _field: string) {
+    if (this[_dataSrc]) {
+      return this[_dataSrc].map(t => t[_field]).reduce((acc, value) => acc + value, 0);
+    } else {
+      return null;
+    }
+  }
 }
 
 export interface TeaStock {
