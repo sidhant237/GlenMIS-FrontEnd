@@ -20,7 +20,7 @@ export class InvoiceListComponent implements OnInit {
     this.startdate = new Date();
     this.enddate = new Date();
     this.startdate.setDate(this.startdate.getDate() - 1);
-    this.displayedColumns = ['InvNo', 'Grade', 'NetWt', 'Papersacks', 'Packdate', 'DispatchDate'];
+    this.displayedColumns = ['InvNo', 'Grade', 'NetWt', 'Papersacks', 'Packdate'];
 
     const url = 'http://127.0.0.1:5000/invoicelist?start=' + this.convert(this.startdate) + '&end=' + this.convert(this.enddate);
     this.http.get(url).subscribe((data: Invoice) => {
@@ -48,6 +48,14 @@ export class InvoiceListComponent implements OnInit {
     day = ("0" + date.getDate()).slice(-2);
     return [date.getFullYear(), mnth, day].join("-").toString();
     }
+
+    getTotal(_dataSrc: string, _field: string) {
+      if (this[_dataSrc]) {
+        return this[_dataSrc].map(t => t[_field]).reduce((acc, value) => acc + value, 0);
+      } else {
+        return null;
+      }
+    }
 }
 
 export interface Invoice {
@@ -56,5 +64,4 @@ export interface Invoice {
   NetWt: string;
   Papersacks: string;
   Packdate: number;
-  DispatchDate: number;
 }
