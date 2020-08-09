@@ -54,6 +54,14 @@ export class FactoryComponent implements OnInit {
     day = ("0" + date.getDate()).slice(-2);
     return [date.getFullYear(), mnth, day].join("-").toString();
   }
+
+  getTotal(_dataSrc: string, _field: string) {
+    if (this[_dataSrc]) {
+      return this[_dataSrc].map(t => t[_field]).reduce((acc, value) => acc + value, 0);
+    } else {
+      return null;
+    }
+  }
 }
 
 export interface Factory {
