@@ -1,13 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { HttpClient } from '@angular/common/http';
+import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
+import { Subscription } from 'rxjs';
+
 
 @Component({
   selector: 'app-cultivation-grp',
   templateUrl: './cultivation-grp.component.html',
   styleUrls: ['./cultivation-grp.component.css']
 })
-export class CultivationGrpComponent implements OnInit {
+export class CultivationGrpComponent implements OnInit, OnDestroy {
   startdate: any;
   enddate: any;
   startdateCmp: any;
@@ -15,8 +18,11 @@ export class CultivationGrpComponent implements OnInit {
   displayedColumns: any;
   dataSource: any;
   dataSourceCmp: any;
+  stackGrid = false;
 
-  constructor(private http: HttpClient) {
+  mediaSubscription: Subscription;
+
+  constructor(private http: HttpClient, private breakPointObserver: BreakpointObserver) {
   }
 
   ngOnInit() {
@@ -31,7 +37,25 @@ export class CultivationGrpComponent implements OnInit {
 	this.http.get(url).subscribe((data: CultivationGroupByJob) => {
 		this.dataSource = data;
 		});
+
+	this.mediaWidthHandler();
 	}
+
+	ngOnDestroy() {
+		this.mediaSubscription.unsubscribe();
+	}
+
+	mediaWidthHandler() {
+		this.mediaSubscription = this.breakPointObserver.observe([
+		  '(max-width: 700px)'
+			]).subscribe(result => {
+			  if (result.matches === true) {
+				this.stackGrid = true;
+			  } else {
+				this.stackGrid = false;
+			  }
+		});
+	  }
 
 	clickedGo() {
 		const url = 'http://127.0.0.1:5000/cultgroup?start=' + this.convert(this.startdate) + '&end=' + this.convert(this.enddate);
