@@ -54,6 +54,11 @@ tr.mat-footer-row {
 }
 
 @media(max-width: 700px) {
+
+  h3 {
+    text-align: center;
+  }
+
   .col-5 {
     width: 100%;
   }
