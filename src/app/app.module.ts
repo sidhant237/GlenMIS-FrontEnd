@@ -16,9 +16,7 @@ import { PluckingGrpComponent } from './plucking-grp/plucking-grp.component';
 import { MndDeploymentComponent } from './mnd-deployment/mnd-deployment.component';
 import { FuelReportComponent } from './fuel-report/fuel-report.component';
 import { TeaStockComponent } from './tea-stock/tea-stock.component';
-import { TeaMadeComponent } from './tea-made/tea-made.component';
 import { FineLeafComponent } from './fine-leaf/fine-leaf.component';
-import { GradePerComponent } from './grade-per/grade-per.component';
 import { InvoiceListComponent } from './invoice-list/invoice-list.component';
 import { UploadFileComponent } from './upload-file/upload-file.component';
 import { FactoryComponent } from './factory/factory.component';
@@ -35,9 +33,7 @@ import { DailyReportComponent } from './daily-report/daily-report.component';
     MndDeploymentComponent,
     FuelReportComponent,
     TeaStockComponent,
-    TeaMadeComponent,
     FineLeafComponent,
-    GradePerComponent,
     InvoiceListComponent,
     UploadFileComponent,
     FactoryComponent,
