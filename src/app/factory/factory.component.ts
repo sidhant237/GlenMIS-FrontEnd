@@ -1,13 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { HttpClient } from '@angular/common/http';
+import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-factory',
   templateUrl: './factory.component.html',
   styleUrls: ['./factory.component.css']
 })
-export class FactoryComponent implements OnInit {
+export class FactoryComponent implements OnInit, OnDestroy {
 
   date: any;
   teaMadeColumns: string[];
@@ -16,8 +18,11 @@ export class FactoryComponent implements OnInit {
   teaMadeData: any;
   greenleafData: any;
   gradePerData: any;
+  stackGrid = false;
 
-  constructor(private http: HttpClient) {
+  mediaSubscription: Subscription;
+
+  constructor(private http: HttpClient, private breakPointObserver: BreakpointObserver) {
   }
 
   ngOnInit() {
@@ -32,6 +37,24 @@ export class FactoryComponent implements OnInit {
       this.teaMadeData = data.TeaMade;
       this.greenleafData = data.Greenleaf;
       this.gradePerData = data.GradePer;
+    });
+
+    this.mediaWidthHandler();
+  }
+
+  ngOnDestroy() {
+    this.mediaSubscription.unsubscribe();
+  }
+
+  mediaWidthHandler() {
+    this.mediaSubscription = this.breakPointObserver.observe([
+      '(max-width: 700px)'
+        ]).subscribe(result => {
+          if (result.matches === true) {
+            this.stackGrid = true;
+          } else {
+            this.stackGrid = false;
+          }
     });
   }
 
