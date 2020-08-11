@@ -68,4 +68,8 @@ tr.mat-footer-row {
   .control-wrap {
     flex-direction: column;
   }
+
+  .example-container {
+    width: 100%;
+  }
 }
