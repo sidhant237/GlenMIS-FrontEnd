@@ -11,6 +11,21 @@ button {
     align-items: center;
 }
 
+.upload-wrap {
+    margin-top: 20px;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.upload-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .mat-grid-list {
     width: 60%;
     height: 50%;
@@ -40,3 +55,14 @@ input[type=file]::-webkit-file-upload-button {
     padding: 0px 20px;
     border-radius: 0;
 }
+
+@media(max-width: 550px) {
+
+    .container {
+        width: 90%;
+    }
+    .upload-controls {
+        flex-direction: column;
+    }
+}
+
