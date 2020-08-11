@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { HttpClient } from '@angular/common/http';
+import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -8,12 +10,15 @@ import { HttpClient } from '@angular/common/http';
   templateUrl: './tea-stock.component.html',
   styleUrls: ['./tea-stock.component.css']
 })
-export class TeaStockComponent implements OnInit {
+export class TeaStockComponent implements OnInit, OnDestroy {
   startdate: any;
   displayedColumns: string[];
   dataSource: TeaStock;
+  meduimScreen = false;
 
-  constructor(private http: HttpClient) {
+  mediaSubscription: Subscription;
+
+  constructor(private http: HttpClient, private breakPointObserver: BreakpointObserver) {
   }
 
   ngOnInit() {
@@ -24,6 +29,24 @@ export class TeaStockComponent implements OnInit {
     const url = 'http://127.0.0.1:5000/teastock?start=' + this.convert(this.startdate);
     this.http.get(url).subscribe((data: TeaStock) => {
     this.dataSource = data;
+    });
+
+    this.mediumScreenHandler();
+  }
+
+  ngOnDestroy() {
+    this.mediaSubscription.unsubscribe();
+  }
+
+  mediumScreenHandler() {
+    this.mediaSubscription = this.breakPointObserver.observe([
+      '(max-width: 850px)'
+        ]).subscribe(result => {
+          if (result.matches === true) {
+            this.meduimScreen = true;
+          } else {
+            this.meduimScreen = false;
+          }
     });
   }
 

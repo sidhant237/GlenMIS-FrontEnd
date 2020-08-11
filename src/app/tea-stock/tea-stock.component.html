@@ -1,8 +1,8 @@
 <mat-grid-list cols="3" rowHeight="90px" class="example-container col-5">
-    <mat-grid-tile colspan="1">
+    <mat-grid-tile [colspan]="meduimScreen ? 3 : 1">
       <h3>Tea Stock reports</h3>
     </mat-grid-tile>
-    <mat-grid-tile colspan="2">
+    <mat-grid-tile [colspan]="meduimScreen ? 3 : 2">
       <mat-form-field style="width: 100px !important;">
         <input matInput [matDatepicker]="picker1" placeholder="Start Date" [value]="startdate" disabled
           (dateChange)="dateChange('startdate', $event)">
