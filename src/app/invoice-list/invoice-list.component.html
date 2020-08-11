@@ -1,8 +1,7 @@
-<mat-grid-list cols="3" rowHeight="90px" class="example-container col-5">
-    <mat-grid-tile colspan="1">
-      <h3>Invoice reports</h3>
-    </mat-grid-tile>
-    <mat-grid-tile colspan="2">
+<div class="example-container heading-wrap">
+  <h3>Invoice Reports</h3>
+  <div class="control-wrap">
+    <div class="datepicker-control">
       <mat-form-field style="width: 100px !important;">
         <input matInput [matDatepicker]="picker1" placeholder="Start Date" [value]="startdate" disabled
           (dateChange)="dateChange('startdate', $event)">
@@ -16,10 +15,10 @@
         <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
         <mat-datepicker #picker2 disabled="false"></mat-datepicker>
       </mat-form-field>
-  
-      <button mat-raised-button color="accent" (click)="clickedGo()">Go</button>
-    </mat-grid-tile>
-</mat-grid-list>
+    </div>
+    <button mat-raised-button color="accent" (click)="clickedGo()">Go</button>
+  </div>
+</div>
   
 <div class="example-container mat-elevation-z8 col-5">
     <table mat-table [dataSource]="dataSource">
