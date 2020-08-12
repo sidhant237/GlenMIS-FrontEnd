@@ -29,7 +29,7 @@ def upload_csv_file():
             #opening file for writing
             csv_data = csv.reader(open(file_path))
             for row in csv_data:
-                  query = f'''INSERT INTO FIELDENTRY (Date, Job_ID, Mnd_Val) VALUES ('{str(row[0])}',{int(row[1])},{int(row[2])})'''
+                  query = f'''INSERT INTO fuelentry (Date, Fuel_ID, Mach_ID, Fuel_Val) VALUES ('{str(row[0])}',{int(row[1])},{int(row[2])},{int(row[3])})'''
                   print(query)
                   cur.execute(query)
                   mysql.connection.commit()
@@ -48,3 +48,4 @@ if __name__ == "__main__":
 
 #FIELDENTRY - WITHOUT PLUCK/CULT (DATE/JOB/MND)
 #query = f'''INSERT INTO FIELDENTRY (Date, Job_ID, Mnd_Val) VALUES ('{str(row[0])}',{int(row[1])},{int(row[2])})'''
+
