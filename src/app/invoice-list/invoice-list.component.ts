@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { HttpClient } from '@angular/common/http';
 
+import { environment } from './../../environments/environment';
+
 @Component({
   selector: 'app-invoice-list',
   templateUrl: './invoice-list.component.html',
@@ -22,14 +24,14 @@ export class InvoiceListComponent implements OnInit {
     this.startdate.setDate(this.startdate.getDate() - 1);
     this.displayedColumns = ['InvNo', 'Grade', 'NetWt', 'Papersacks', 'Packdate'];
 
-    const url = 'http://127.0.0.1:5000/invoicelist?start=' + this.convert(this.startdate) + '&end=' + this.convert(this.enddate);
+    const url = environment.url + 'invoicelist?start=' + this.convert(this.startdate) + '&end=' + this.convert(this.enddate);
     this.http.get(url).subscribe((data: Invoice) => {
     this.dataSource = data;
     });
   }
 
   clickedGo() {
-    const url = 'http://127.0.0.1:5000/invoicelist?start=' + this.convert(this.startdate) + '&end=' + this.convert(this.enddate);
+    const url = environment.url + 'invoicelist?start=' + this.convert(this.startdate) + '&end=' + this.convert(this.enddate);
     this.http.get(url).subscribe((data: Invoice) => {
       this.dataSource = data;
     });

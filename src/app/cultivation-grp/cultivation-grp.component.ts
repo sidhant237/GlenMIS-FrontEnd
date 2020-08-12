@@ -4,6 +4,8 @@ import { HttpClient } from '@angular/common/http';
 import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
 import { Subscription } from 'rxjs';
 
+import { environment } from './../../environments/environment';
+
 
 @Component({
   selector: 'app-cultivation-grp',
@@ -33,7 +35,7 @@ export class CultivationGrpComponent implements OnInit, OnDestroy {
 	this.enddateCmp = this.enddate;
 	this.displayedColumns = ['Job_Name', 'Mandays', 'AreaCovered', 'MndArea'];
 
-	const url = 'http://127.0.0.1:5000/cultgroup?start=' + this.convert(this.startdate) + '&end=' + this.convert(this.enddate);
+	const url = environment.url + 'cultgroup?start=' + this.convert(this.startdate) + '&end=' + this.convert(this.enddate);
 	this.http.get(url).subscribe((data: CultivationGroupByJob) => {
 		this.dataSource = data;
 		});
@@ -58,14 +60,14 @@ export class CultivationGrpComponent implements OnInit, OnDestroy {
 	  }
 
 	clickedGo() {
-		const url = 'http://127.0.0.1:5000/cultgroup?start=' + this.convert(this.startdate) + '&end=' + this.convert(this.enddate);
+		const url = environment.url + 'cultgroup?start=' + this.convert(this.startdate) + '&end=' + this.convert(this.enddate);
 		this.http.get(url).subscribe((data: CultivationGroupByJob) => {
 		this.dataSource = data;
 		});
 	}
 
 	clickedGoCompare() {
-		const url = 'http://127.0.0.1:5000/cultgroup?start=' + this.convert(this.startdateCmp) + '&end=' + this.convert(this.enddateCmp);
+		const url = environment.url + 'cultgroup?start=' + this.convert(this.startdateCmp) + '&end=' + this.convert(this.enddateCmp);
 		this.http.get(url).subscribe((data: CultivationGroupByJob) => {
 			this.dataSourceCmp = data;
 		});

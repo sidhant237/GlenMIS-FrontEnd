@@ -4,6 +4,8 @@ import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
 import { Subscription } from 'rxjs';
 
+import { environment } from './../../environments/environment';
+
 export interface FuelReport {
   Machine: string;
   FuelUsed: number;
@@ -38,7 +40,7 @@ export class FuelReportComponent implements OnInit, OnDestroy {
     this.startdateCmp = this.startdate;
     this.enddateCmp = this.enddate;
 
-    const url = 'http://127.0.0.1:5000/fuelreport?start=' + this.convert(this.startdate) + '&end=' + this.convert(this.enddate);
+    const url = environment.url + 'fuelreport?start=' + this.convert(this.startdate) + '&end=' + this.convert(this.enddate);
     this.http.get(url).subscribe((data: FuelReport[]) => {
       this.dataSource = data;
     });
@@ -71,14 +73,14 @@ export class FuelReportComponent implements OnInit, OnDestroy {
   }
 
   clickedGo() {
-    const url = 'http://127.0.0.1:5000/fuelreport?start=' + this.convert(this.startdate) + '&end=' + this.convert(this.enddate);
+    const url = environment.url + 'fuelreport?start=' + this.convert(this.startdate) + '&end=' + this.convert(this.enddate);
     this.http.get(url).subscribe((data: FuelReport[]) => {
       this.dataSource = data;
     });
   }
 
   clickedGoCompare() {
-    const url = 'http://127.0.0.1:5000/fuelreport?start=' + this.convert(this.startdateCmp) + '&end=' + this.convert(this.enddateCmp);
+    const url = environment.url + 'fuelreport?start=' + this.convert(this.startdateCmp) + '&end=' + this.convert(this.enddateCmp);
     this.http.get(url).subscribe((data: FuelReport[]) => {
       this.dataSourceCmp = data;
     });

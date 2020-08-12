@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { HttpClient } from '@angular/common/http';
 
+import { environment } from './../../environments/environment';
+
 @Component({
   selector: 'app-plucking',
   templateUrl: './plucking.component.html',
@@ -30,14 +32,14 @@ export class PluckingComponent implements OnInit {
     this.displayedColumns = [ 'Date', 'Division', 'Section_Name', 'Squad_Name', 'Mandays', 'Greenleaf',
                               'AreaCovered', 'GlMnd', 'GlHa', 'MndHa', 'Prune', 'Jat', 'SecArea'];
 
-    const url = 'http://127.0.0.1:5000/pluckdaily?start=' + this.convert(this.startdate) + '&end=' + this.convert(this.enddate);
+    const url = environment.url + 'pluckdaily?start=' + this.convert(this.startdate) + '&end=' + this.convert(this.enddate);
     this.http.get(url).subscribe((data: Plucking) => {
       this.dataSource = data;
     });
   }
 
   clickedGo() {
-    const url = 'http://127.0.0.1:5000/pluckdaily?start=' + this.convert(this.startdate) + '&end=' + this.convert(this.enddate);
+    const url = environment.url + 'pluckdaily?start=' + this.convert(this.startdate) + '&end=' + this.convert(this.enddate);
     this.http.get(url).subscribe((data: Plucking) => {
       this.dataSource = data;
     });
@@ -48,7 +50,7 @@ export class PluckingComponent implements OnInit {
   }
 
   clickedGoCompare() {
-    const url = 'http://127.0.0.1:5000/pluckdaily?start=' + this.convert(this.startdateCmp) + '&end=' + this.convert(this.enddateCmp);
+    const url = environment.url + 'pluckdaily?start=' + this.convert(this.startdateCmp) + '&end=' + this.convert(this.enddateCmp);
     this.http.get(url).subscribe((data: Plucking) => {
       this.dataSourceCmp = data;
     });

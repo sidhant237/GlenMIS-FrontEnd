@@ -4,6 +4,8 @@ import { HttpClient } from '@angular/common/http';
 import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
 import { Subscription } from 'rxjs';
 
+import { environment } from './../../environments/environment';
+
 @Component({
   selector: 'app-factory',
   templateUrl: './factory.component.html',
@@ -32,7 +34,7 @@ export class FactoryComponent implements OnInit, OnDestroy {
     this.greenLeafColumns = ['Division', 'GLToday', 'GLTodayLY', 'FineLeaf'];
     this.GradePerColumns = ['Grade', 'Qnty', 'Percent'];
 
-    const url = 'http://127.0.0.1:5000/factory?start=' + this.convert(this.date);
+    const url = environment.url + 'factory?start=' + this.convert(this.date);
     this.http.get(url).subscribe((data: Factory) => {
       this.teaMadeData = data.TeaMade;
       this.greenleafData = data.Greenleaf;
@@ -59,7 +61,7 @@ export class FactoryComponent implements OnInit, OnDestroy {
   }
 
   clickedGo() {
-    const url = 'http://127.0.0.1:5000/factory?start=' + this.convert(this.date);
+    const url = environment.url + 'factory?start=' + this.convert(this.date);
     this.http.get(url).subscribe((data: Factory) => {
       this.teaMadeData = data.TeaMade;
       this.greenleafData = data.Greenleaf;

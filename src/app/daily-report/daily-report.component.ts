@@ -4,6 +4,8 @@ import { HttpClient } from '@angular/common/http';
 import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
 import { Subscription } from 'rxjs';
 
+import { environment } from './../../environments/environment';
+
 @Component({
   selector: 'app-daily-report',
   templateUrl: './daily-report.component.html',
@@ -45,7 +47,7 @@ export class DailyReportComponent implements OnInit, OnDestroy {
     this.CultivationColumns = ['Date', 'Division', 'AreaCovered', 'Job_Name', 'Mandays', 'Mnd/Area', 'Section_Name', 'Squad_Name'];
     this.FuelReportColumns = ['Machine', 'FuelUsed', 'TM', 'TMFuel'];
 
-    const url = 'http://127.0.0.1:5000/dailyreport?start=' + this.convert(this.startdate);
+    const url = environment.url + 'dailyreport?start=' + this.convert(this.startdate);
     this.http.get(url).subscribe((data: DailyReport) => {
       this.teaMadeData = data.TeaMade;
       this.greenleafData = data.Greenleaf;
@@ -76,7 +78,7 @@ export class DailyReportComponent implements OnInit, OnDestroy {
   }
 
   clickedGo() {
-    const url = 'http://127.0.0.1:5000/dailyreport?start=' + this.convert(this.startdate);
+    const url = environment.url + 'dailyreport?start=' + this.convert(this.startdate);
     this.http.get(url).subscribe((data: DailyReport) => {
       this.teaMadeData = data.TeaMade;
       this.greenleafData = data.Greenleaf;

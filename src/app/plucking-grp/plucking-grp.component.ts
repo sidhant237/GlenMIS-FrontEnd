@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { HttpClient } from '@angular/common/http';
-import { of } from 'rxjs';
+
+import { environment } from './../../environments/environment';
 
 @Component({
   selector: 'app-plucking-grp',
@@ -41,14 +42,14 @@ export class PluckingGrpComponent implements OnInit {
     this.group = 'Division';
     this.groupCmp = 'Division';
 
-    const url = 'http://127.0.0.1:5000/pluckgroup?start=' + this.convert(this.startdate) + '&end=' + this.convert(this.enddate) + '&grpby=' + this.selected;
+    const url = environment.url + 'pluckgroup?start=' + this.convert(this.startdate) + '&end=' + this.convert(this.enddate) + '&grpby=' + this.selected;
     this.http.get(url).subscribe((data: PluckingGroupBySection) => {
       this.dataSource = data;
     });
   }
 
   clickedGo() {
-    const url = 'http://127.0.0.1:5000/pluckgroup?start=' + this.convert(this.startdate) + '&end=' + this.convert(this.enddate) + '&grpby=' + this.selected;
+    const url = environment.url + 'pluckgroup?start=' + this.convert(this.startdate) + '&end=' + this.convert(this.enddate) + '&grpby=' + this.selected;
     this.http.get(url).subscribe((data: any) => {
       this.group = this.selected;
       if (this.selected === 'Section') {
@@ -65,7 +66,7 @@ export class PluckingGrpComponent implements OnInit {
   }
 
   clickedGoCompare() {
-    const url = 'http://127.0.0.1:5000/pluckgroup?start=' + this.convert(this.startdateCmp) + '&end=' + this.convert(this.enddateCmp) + '&grpby=' + this.selectedCmp;
+    const url = environment.url + 'pluckgroup?start=' + this.convert(this.startdateCmp) + '&end=' + this.convert(this.enddateCmp) + '&grpby=' + this.selectedCmp;
     this.http.get(url).subscribe((data: any) => {
       this.groupCmp = this.selectedCmp;
       if (this.selectedCmp === 'Section') {

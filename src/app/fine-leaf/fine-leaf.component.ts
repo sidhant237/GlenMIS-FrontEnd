@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { HttpClient } from '@angular/common/http';
 
+import { environment } from './../../environments/environment';
+
 @Component({
   selector: 'app-fine-leaf',
   templateUrl: './fine-leaf.component.html',
@@ -27,21 +29,21 @@ export class FineLeafComponent implements OnInit {
     this.enddateCmp = this.enddate;
     this.displayedColumns = ['Division', 'GLToday', 'GLTodayLY', 'FineLeaf'];
 
-    const url = 'http://127.0.0.1:5000/GL?start=' + this.convert(this.startdate) + '&end=' + this.convert(this.enddate);
+    const url = environment.url + 'GL?start=' + this.convert(this.startdate) + '&end=' + this.convert(this.enddate);
     this.http.get(url).subscribe((data: GreenLeaf) => {
       this.dataSource = data;
     });
   }
 
   clickedGo() {
-    const url = 'http://127.0.0.1:5000/GL?start=' + this.convert(this.startdate) + '&end=' + this.convert(this.enddate);
+    const url = environment.url + 'GL?start=' + this.convert(this.startdate) + '&end=' + this.convert(this.enddate);
     this.http.get(url).subscribe((data: GreenLeaf) => {
       this.dataSource = data;
     });
   }
 
   clickedGoCompare() {
-    const url = 'http://127.0.0.1:5000/GL?start=' + this.convert(this.startdateCmp) + '&end=' + this.convert(this.enddateCmp);
+    const url = environment.url + 'GL?start=' + this.convert(this.startdateCmp) + '&end=' + this.convert(this.enddateCmp);
     this.http.get(url).subscribe((data: GreenLeaf) => {
       this.dataSourceCmp = data;
     });

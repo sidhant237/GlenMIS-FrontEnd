@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 
+import { environment } from './../../environments/environment';
+
 export interface MndDeployment {
   Job_Name: string;
   Mandays: number;
@@ -32,7 +34,7 @@ export class MndDeploymentComponent implements OnInit {
     this.startdateCmp = this.startdate;
     this.enddateCmp = this.enddate;
 
-    const url = 'http://127.0.0.1:5000/mnddeploy?start=' + this.convert(this.startdate) + '&end=' + this.convert(this.enddate);
+    const url = environment.url + 'mnddeploy?start=' + this.convert(this.startdate) + '&end=' + this.convert(this.enddate);
     this.http.get(url).subscribe((data: MndDeployment[]) => {
       this.dataSource = data;
     });
@@ -48,14 +50,14 @@ export class MndDeploymentComponent implements OnInit {
   }
 
   clickedGo() {
-    const url = 'http://127.0.0.1:5000/mnddeploy?start=' + this.convert(this.startdate) + '&end=' + this.convert(this.enddate);
+    const url = environment.url + 'mnddeploy?start=' + this.convert(this.startdate) + '&end=' + this.convert(this.enddate);
     this.http.get(url).subscribe((data: MndDeployment[]) => {
       this.dataSource = data;
     });
   }
 
   clickedGoCompare() {
-    const url = 'http://127.0.0.1:5000/mnddeploy?start=' + this.convert(this.startdateCmp) + '&end=' + this.convert(this.enddateCmp);
+    const url = environment.url + 'mnddeploy?start=' + this.convert(this.startdateCmp) + '&end=' + this.convert(this.enddateCmp);
     this.http.get(url).subscribe((data: MndDeployment[]) => {
       this.dataSourceCmp = data;
     });

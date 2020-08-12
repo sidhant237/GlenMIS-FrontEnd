@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {MatSnackBar} from '@angular/material/snack-bar';
 
+import { environment } from './../../environments/environment';
+
 @Component({
   selector: 'app-upload-file',
   templateUrl: './upload-file.component.html',
@@ -25,7 +27,7 @@ export class UploadFileComponent implements OnInit {
 
   uploadFileToServer() {
     this.isUploading = true;
-    const url = 'http://127.0.0.1:5000/upload?table=' + this.database;
+    const url = environment.url + 'upload?table=' + this.database;
     const formData: FormData = new FormData();
     formData.append('file', this.fileToUpload, this.fileToUpload.name);
     this.http.post(url, formData).subscribe(
@@ -48,7 +50,7 @@ export class UploadFileComponent implements OnInit {
 
   emailReportHandler() {
     this.isMailSending = true;
-    const url = 'http://127.0.0.1:5000/email-report';
+    const url = environment.url + 'email-report';
     this.http.post(url, {}).subscribe(
       result => {
         this.isMailSending = false;

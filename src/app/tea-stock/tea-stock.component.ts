@@ -4,6 +4,8 @@ import { HttpClient } from '@angular/common/http';
 import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
 import { Subscription } from 'rxjs';
 
+import { environment } from './../../environments/environment';
+
 
 @Component({
   selector: 'app-tea-stock',
@@ -26,7 +28,7 @@ export class TeaStockComponent implements OnInit, OnDestroy {
     this.startdate.setDate(this.startdate.getDate() - 1);
     this.displayedColumns = ['Grade', 'Kg' ];
 
-    const url = 'http://127.0.0.1:5000/teastock?start=' + this.convert(this.startdate);
+    const url = environment.url + 'teastock?start=' + this.convert(this.startdate);
     this.http.get(url).subscribe((data: TeaStock) => {
     this.dataSource = data;
     });
@@ -51,7 +53,7 @@ export class TeaStockComponent implements OnInit, OnDestroy {
   }
 
   clickedGo() {
-    const url = 'http://127.0.0.1:5000/teastock?start=' + this.convert(this.startdate);
+    const url = environment.url + 'teastock?start=' + this.convert(this.startdate);
     this.http.get(url).subscribe((data: TeaStock) => {
       this.dataSource = data;
     });

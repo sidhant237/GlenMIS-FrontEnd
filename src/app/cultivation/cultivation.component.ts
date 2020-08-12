@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { HttpClient } from '@angular/common/http';
 
+import { environment } from './../../environments/environment';
+
 @Component({
 	selector: 'app-cultivation',
 	templateUrl: './cultivation.component.html',
@@ -26,27 +28,21 @@ export class CultivationComponent implements OnInit {
 		this.enddateCmp = this.enddate;
 		this.displayedColumns = ['Date', 'Division', 'AreaCovered', 'Job_Name', 'Mandays', 'Mnd/Area', 'Section_Name', 'Squad_Name'];
 
-		const url = 'http://127.0.0.1:5000/cultdaily?start=' + this.convert(this.startdate) + '&end=' + this.convert(this.enddate);
-		//dev purpose
-		//const url = 'http://127.0.0.1:5000/cultdaily?start=' + this._startdate + '&end=' + this._enddate;
+		const url = environment.url + 'cultdaily?start=' + this.convert(this.startdate) + '&end=' + this.convert(this.enddate);
 		this.http.get(url).subscribe((data: ICultivation) => {
 			this.dataSource = data;
 		});
 	}
 
 	clickedGo() {
-		const url = 'http://127.0.0.1:5000/cultdaily?start=' + this.convert(this.startdate) + '&end=' + this.convert(this.enddate);
-		//dev purpose
-		//const url = 'http://127.0.0.1:5000/cultdaily?start=' + this._startdate + '&end=' + this._enddate;
+		const url = environment.url + 'cultdaily?start=' + this.convert(this.startdate) + '&end=' + this.convert(this.enddate);
 		this.http.get(url).subscribe((data: ICultivation) => {
 			this.dataSource = data;
 		});
 	}
 
 	clickedGoCompare() {
-		const url = 'http://127.0.0.1:5000/cultdaily?start=' + this.convert(this.startdateCmp) + '&end=' + this.convert(this.enddateCmp);
-		//dev purpose
-		//const url = 'http://127.0.0.1:5000/cultdaily?start=' + this._startdate + '&end=' + this._enddate;
+		const url = environment.url + 'cultdaily?start=' + this.convert(this.startdateCmp) + '&end=' + this.convert(this.enddateCmp);
 		this.http.get(url).subscribe((data: ICultivation) => {
 			this.dataSourceCmp = data;
 		});
