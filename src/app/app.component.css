@@ -7,7 +7,16 @@
     color: white;
 }
 
+.mat-drawer {
+    background-color: #70a452;
+} 
+
+.mat-drawer-side {
+    border-right: none;
+}
+
 .mat-nav-list {
+    width: 100%;
     background-color: #70a452;
 }
 
