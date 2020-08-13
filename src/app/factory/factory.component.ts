@@ -32,7 +32,7 @@ export class FactoryComponent implements OnInit, OnDestroy {
     this.date.setDate(this.date.getDate() - 1);
     this.teaMadeColumns = ['TMToday', 'TMTodate', 'TMTodateLY', 'RecoveryToday', 'RecoveryTodate'];
     this.greenLeafColumns = ['Division', 'GLToday', 'GLTodayLY', 'FineLeaf'];
-    this.GradePerColumns = ['Grade', 'Qnty', 'Percent'];
+    this.GradePerColumns = ['Grade', 'PercentToday', 'PercentTodate'];
 
     const url = environment.url + 'factory?start=' + this.convert(this.date);
     this.http.get(url).subscribe((data: Factory) => {

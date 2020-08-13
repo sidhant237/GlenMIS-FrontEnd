@@ -40,7 +40,7 @@ export class DailyReportComponent implements OnInit, OnDestroy {
     this.startdate.setDate(this.startdate.getDate() - 1);
     this.teaMadeColumns = ['TMToday', 'TMTodate', 'TMTodateLY', 'RecoveryToday', 'RecoveryTodate'];
     this.greenLeafColumns = ['Division', 'GLToday', 'GLTodayLY', 'FineLeaf'];
-    this.GradePerColumns = ['Grade', 'Qnty', 'Percent'];
+    this.GradePerColumns = ['Grade', 'PercentToday', 'PercentTodate'];
     this.MandaysColumns = ['Job_Name', 'Mandays'];
     this.PluckingColumns = ['Date', 'Division', 'Section_Name', 'Squad_Name', 'Mandays', 'Greenleaf', 'AreaCovered',
                             'GlMnd', 'GlHa', 'MndHa', 'Prune', 'Jat', 'SecArea'];
