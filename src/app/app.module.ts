@@ -22,6 +22,7 @@ import { UploadFileComponent } from './upload-file/upload-file.component';
 import { FactoryComponent } from './factory/factory.component';
 import { SpinnerComponent } from './shared/spinner/spinner.component';
 import { DailyReportComponent } from './daily-report/daily-report.component';
+import { GradePerComponent } from './grade-per/grade-per.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { DailyReportComponent } from './daily-report/daily-report.component';
     UploadFileComponent,
     FactoryComponent,
     SpinnerComponent,
-    DailyReportComponent
+    DailyReportComponent,
+    GradePerComponent
   ],
   imports: [
     BrowserModule,

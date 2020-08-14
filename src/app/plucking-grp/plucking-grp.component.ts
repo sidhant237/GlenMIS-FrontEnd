@@ -105,7 +105,7 @@ export class PluckingGrpComponent implements OnInit {
       return null;
     }
   }
-
+  
   parseDivisionData(type: string, data: PluckingGroupByDivision) {
     switch (type) {
       case 'report': this.dataSource = data; break;
