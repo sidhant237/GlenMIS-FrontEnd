@@ -38,7 +38,7 @@
         </ng-container>
 
         <ng-container matColumnDef="FineLeaf">
-            <th mat-header-cell *matHeaderCellDef> Fine Leaf </th>
+            <th mat-header-cell *matHeaderCellDef> Fine Leaf % </th>
             <td mat-cell *matCellDef="let element"> {{element.FineLeaf}} </td>
             <td mat-footer-cell *matFooterCellDef>{{getTotal('greenleafData','FineLeaf') | number}}</td>
         </ng-container>
@@ -75,13 +75,13 @@
         </ng-container>
 
         <ng-container matColumnDef="RecoveryToday">
-            <th mat-header-cell *matHeaderCellDef> Recovery Today </th>
+            <th mat-header-cell *matHeaderCellDef> Recovery % Today </th>
             <td mat-cell *matCellDef="let element"> {{element.RecoveryToday}} </td>
             <td mat-footer-cell *matFooterCellDef>{{getTotal('teaMadeData','RecoveryToday') | number}}</td>
         </ng-container>
 
         <ng-container matColumnDef="RecoveryTodate">
-            <th mat-header-cell *matHeaderCellDef> Recovery To date </th>
+            <th mat-header-cell *matHeaderCellDef> Recovery % Todate </th>
             <td mat-cell *matCellDef="let element"> {{element.RecoveryTodate}} </td>
             <td mat-footer-cell *matFooterCellDef>{{getTotal('teaMadeData','RecoveryTodate') | number}}</td>
         </ng-container>
@@ -284,13 +284,13 @@
         </ng-container>
 
         <ng-container matColumnDef="PercentToday">
-            <th mat-header-cell *matHeaderCellDef> Percent Today </th>
+            <th mat-header-cell *matHeaderCellDef> Percent % Today </th>
             <td mat-cell *matCellDef="let element"> {{element.PercentToday | number: '1.2-2'}} </td>
             <td mat-footer-cell *matFooterCellDef></td>
         </ng-container>
 
         <ng-container matColumnDef="PercentTodate">
-            <th mat-header-cell *matHeaderCellDef> Percent To date </th>
+            <th mat-header-cell *matHeaderCellDef> Percent % To date </th>
             <td mat-cell *matCellDef="let element"> {{element.PercentTodate | number: '1.2-2' }} </td>
             <td mat-footer-cell *matFooterCellDef></td>
         </ng-container>

@@ -58,11 +58,11 @@ th {
 
 tr.mat-footer-row {
   font-weight: bold;
+  background-color: #c0c0c0;
 }
 
 .mat-table-sticky {
   border-top: 1px solid #e0e0e0;
-  background-color: #c0c0c0;
 }
 
 @media(max-width: 650px) {
