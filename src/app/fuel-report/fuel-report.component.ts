@@ -4,6 +4,7 @@ import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
 import { Subscription } from 'rxjs';
 
+import { DateLoaderService } from '../_services/date-loader.service';
 import { environment } from './../../environments/environment';
 
 export interface FuelReport {
@@ -31,7 +32,7 @@ export class FuelReportComponent implements OnInit, OnDestroy {
 
   mediaSubscription: Subscription;
 
-  constructor(private http: HttpClient, private breakPointObserver: BreakpointObserver) { }
+  constructor(private http: HttpClient, private breakPointObserver: BreakpointObserver, private dateService: DateLoaderService) { }
 
   ngOnInit() {
     this.startdate = new Date();
@@ -40,10 +41,24 @@ export class FuelReportComponent implements OnInit, OnDestroy {
     this.startdateCmp = this.startdate;
     this.enddateCmp = this.enddate;
 
+    this.dateService.loadUpdatedDates().subscribe(
+      (date: any) => {
+        this.startdate = new Date(date.Date.split('/').join('-'));
+        const url = environment.url + 'fuelreport?start=' + this.convert(this.startdate) + '&end=' + this.convert(this.enddate);
+        this.http.get(url).subscribe((data: FuelReport[]) => {
+          this.dataSource = data;
+        });
+      }, error => {
+        console.log(error);
+      }
+    );
+
+    /*
     const url = environment.url + 'fuelreport?start=' + this.convert(this.startdate) + '&end=' + this.convert(this.enddate);
     this.http.get(url).subscribe((data: FuelReport[]) => {
       this.dataSource = data;
-    });
+    }); */
+
     this.mediaChangeHandler();
   }
 
