@@ -5,6 +5,7 @@ import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
 import { Subscription } from 'rxjs';
 
 import { environment } from './../../environments/environment';
+import { DateLoaderService } from '../_services/date-loader.service';
 
 
 @Component({
@@ -24,7 +25,7 @@ export class CultivationGrpComponent implements OnInit, OnDestroy {
 
   mediaSubscription: Subscription;
 
-  constructor(private http: HttpClient, private breakPointObserver: BreakpointObserver) {
+  constructor(private http: HttpClient, private breakPointObserver: BreakpointObserver, private dateService: DateLoaderService) {
   }
 
   ngOnInit() {
@@ -35,11 +36,22 @@ export class CultivationGrpComponent implements OnInit, OnDestroy {
 	this.enddateCmp = this.enddate;
 	this.displayedColumns = ['Job_Name', 'Mandays', 'AreaCovered', 'MndArea'];
 
-	const url = environment.url + 'cultgroup?start=' + this.convert(this.startdate) + '&end=' + this.convert(this.enddate);
+/*	const url = environment.url + 'cultgroup?start=' + this.convert(this.startdate) + '&end=' + this.convert(this.enddate);
 	this.http.get(url).subscribe((data: CultivationGroupByJob) => {
 		this.dataSource = data;
-		});
-
+	}); */
+	
+	this.dateService.loadUpdatedDates().subscribe(
+		(date: any) => {
+			this.startdate = new Date(date.Date.split('/').join('-'));
+			const url = environment.url + 'cultgroup?start=' + this.convert(this.startdate) + '&end=' + this.convert(this.enddate);
+			this.http.get(url).subscribe((data: CultivationGroupByJob) => {
+				this.dataSource = data;
+			});
+		}, error => {
+			console.log(error);
+		}
+	);
 	this.mediaWidthHandler();
 	}
 
