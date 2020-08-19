@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { HttpClient } from '@angular/common/http';
 
+import { DateLoaderService } from '../_services/date-loader.service';
 import { environment } from './../../environments/environment';
 
 @Component({
@@ -18,7 +19,7 @@ export class FineLeafComponent implements OnInit {
   dataSource: any;
   dataSourceCmp: any;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private dateService: DateLoaderService) {
   }
 
   ngOnInit() {
@@ -29,10 +30,23 @@ export class FineLeafComponent implements OnInit {
     this.enddateCmp = this.enddate;
     this.displayedColumns = ['Division', 'GLToday', 'GLTodayLY', 'FineLeaf'];
 
+    this.dateService.loadUpdatedDates().subscribe(
+      (date: any) => {
+        this.startdate = new Date(date.Date.split('/').join('-'));
+        const url = environment.url + 'GL?start=' + this.convert(this.startdate) + '&end=' + this.convert(this.enddate);
+        this.http.get(url).subscribe((data: GreenLeaf) => {
+          this.dataSource = data;
+        });
+      }, error => {
+        console.log(error);
+      }
+    );
+
+    /*
     const url = environment.url + 'GL?start=' + this.convert(this.startdate) + '&end=' + this.convert(this.enddate);
     this.http.get(url).subscribe((data: GreenLeaf) => {
       this.dataSource = data;
-    });
+    }); */
   }
 
   clickedGo() {
