@@ -1,68 +1,61 @@
-button {
-    cursor: pointer;
-    margin: 10px;
-}
-
 .container {
-    margin: 20px 20px;
+    width: 100%;
+    height: 100%;
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
-.upload-wrap {
+.tab-wrap {
+    width: 80%;
+    height: 80%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    margin: 20px 20px;
+}
+
+.menu {
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.menu h4 {
+    padding: 10px 30px;
+    cursor: pointer;
+}
+
+.active {
+    color: #007e4f;
+}
+
+.upload-wrap,
+.email-wrap {
     margin-top: 20px;
     padding: 30px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
 }
 
-.upload-controls {
+.form-group {
+    width: 100%;
+    margin: 20px 5px;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.mat-grid-list {
-    width: 60%;
-    height: 50%;
+.form-group label {
+    width: 200px;
 }
 
-.file-input {
-    cursor: pointer;
-}
-
-input[type=file]::-webkit-file-upload-button {
-    cursor: pointer;
-    border: none;
-    background-color: inherit;
-    padding: 10px;
-    outline: none;
-}
-
-.email-controller {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding-top: 50px;
-}
-
-.mat-flat-button {
-    margin-top: 50px;
-    padding: 0px 20px;
-    border-radius: 0;
-}
-
-@media(max-width: 550px) {
-
-    .container {
-        width: 90%;
-    }
-    .upload-controls {
-        flex-direction: column;
-    }
+button {
+    margin: 20px 0px;
 }
 

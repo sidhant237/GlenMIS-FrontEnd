@@ -12,9 +12,16 @@ import { environment } from './../../environments/environment';
 export class UploadFileComponent implements OnInit {
 
   fileToUpload: File = null;
-  database: string;
   isUploading = false;
   isMailSending = false;
+  activeMenu = 'upload';
+  authenticated: boolean = false;
+  token: string;
+
+  table = '';
+  uploadDate: string;
+
+  emailDate: string;
 
   constructor(private http: HttpClient, private snackBar: MatSnackBar) { }
 
@@ -27,7 +34,7 @@ export class UploadFileComponent implements OnInit {
 
   uploadFileToServer() {
     this.isUploading = true;
-    const url = environment.url + 'upload?table=' + this.database;
+    const url = environment.url + this.table + '?date=' + this.uploadDate;
     const formData: FormData = new FormData();
     formData.append('file', this.fileToUpload, this.fileToUpload.name);
     this.http.post(url, formData).subscribe(
@@ -60,6 +67,12 @@ export class UploadFileComponent implements OnInit {
         this.openSnackBar('Something went wrong', 'Error');
       }
     );
+  }
+
+  authenticateHandler() {
+    if(this.token === 'glenburnmis') {
+      this.authenticated = true;
+    }
   }
 
 }
