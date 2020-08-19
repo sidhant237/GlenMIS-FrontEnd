@@ -33,10 +33,15 @@
     color: #007e4f;
 }
 
+.auth {
+    height: 35px;
+    border: 2px solid #007e4f;
+    box-sizing: border-box;
+    border-radius: 5px;
+}
+
 .upload-wrap,
 .email-wrap {
-    margin-top: 20px;
-    padding: 30px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -51,11 +56,62 @@
     align-items: center;
 }
 
+.form-group .form-control {
+    width: 250px;
+    height: 35px;
+    border: 2px solid #007e4f;
+    border-radius: 5px;
+    font-size: 17px;
+    background-color: white;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.file-input {
+    position: relative;
+    background-color: white;
+    border: 2px solid #007e4f;
+    border-radius: 5px;
+    width: 250px;
+    height: 35px;
+    box-sizing: border-box;
+    text-align: center;
+    font-size: 17px;
+}
+
+
+.file-input::-webkit-file-upload-button {
+    position: absolute;
+    top: 0px;
+    left: -3px;
+    height: 100%;
+    width: 85px;
+    background-color:#007e4f;
+    border: none;
+    box-sizing: border-box;
+    margin: 0;
+    color: white;
+    font-size: 13px;
+}
+
 .form-group label {
     width: 200px;
 }
 
 button {
     margin: 20px 0px;
+}
+
+@media(max-width: 700px) {
+    .tab-wrap {
+        height: 400px;
+        width: 98%;
+    }
+    .form-group {
+        flex-direction: column;
+        align-items: flex-start;
+        margin: 10px;
+        margin-left: 40px;
+    }
 }
 

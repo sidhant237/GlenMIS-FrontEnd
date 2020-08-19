@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 
 import { environment } from './../../environments/environment';
+import { DateLoaderService } from '../_services/date-loader.service';
 
 export interface MndDeployment {
   Job_Name: string;
@@ -25,7 +26,7 @@ export class MndDeploymentComponent implements OnInit {
   enddateCmp: any;
   dataSourceCmp: MndDeployment[];
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private dateService: DateLoaderService) { }
 
   ngOnInit() {
     this.startdate = new Date();
@@ -34,10 +35,24 @@ export class MndDeploymentComponent implements OnInit {
     this.startdateCmp = this.startdate;
     this.enddateCmp = this.enddate;
 
+    this.dateService.loadUpdatedDates().subscribe(
+      (date: any) => {
+        this.startdate = new Date(date.Date.split('/').join('-'));
+        const url = environment.url + 'mnddeploy?start=' + this.convert(this.startdate) + '&end=' + this.convert(this.enddate);
+        this.http.get(url).subscribe((data: MndDeployment[]) => {
+          this.dataSource = data;
+        });
+      }, error => {
+        console.log(error);
+      }
+    );
+
+    /*
     const url = environment.url + 'mnddeploy?start=' + this.convert(this.startdate) + '&end=' + this.convert(this.enddate);
     this.http.get(url).subscribe((data: MndDeployment[]) => {
       this.dataSource = data;
-    });
+    }); */
+
   }
 
   dateChange(type: string, event: MatDatepickerInputEvent<Date>) {

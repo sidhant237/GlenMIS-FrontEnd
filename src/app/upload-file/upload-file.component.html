@@ -20,12 +20,12 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="date"> Date: </label>
+                    <label for="date"> Last Updated Date: </label>
                     <input class="form-control" type="date" name="date" id="date" [(ngModel)]="uploadDate">
                 </div>
                 <div class="form-group">
                     <label for="date"> CSV File: </label>
-                    <input class="form-control" type="file" id="file" (change)="handleFileInput($event.target.files)">
+                    <input class="file-input" id="file-input" type="file" id="file" (change)="handleFileInput($event.target.files)">
                 </div>
                 <button mat-raised-button color="accent" *ngIf="!isUploading" [disabled]="table === ''" (click)="uploadFileToServer()">Upload File</button>
                 <app-spinner *ngIf="isUploading"></app-spinner>
@@ -42,7 +42,7 @@
     </div>
     <div class="content-wrap" *ngIf="!authenticated">
         <div class="form-group">
-            <input type="password" id="auth" [(ngModel)]="token">
+            <input class="auth" type="password" id="auth" [(ngModel)]="token">
             <button mat-raised-button color="accent" (click)="authenticateHandler()">Authenticate</button>
         </div>
     </div>

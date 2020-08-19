@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { HttpClient } from '@angular/common/http';
 
+import { DateLoaderService } from '../_services/date-loader.service';
 import { environment } from './../../environments/environment';
 
 @Component({
@@ -17,7 +18,7 @@ export class CultivationComponent implements OnInit {
 	//_startdate = '2020-07-01';
 	//_enddate = '2020-07-14';
 
-	constructor(private http: HttpClient) {
+	constructor(private http: HttpClient, private dateService: DateLoaderService) {
 	}
 
 	ngOnInit() {
@@ -28,10 +29,22 @@ export class CultivationComponent implements OnInit {
 		this.enddateCmp = this.enddate;
 		this.displayedColumns = ['Date', 'Division', 'AreaCovered', 'Job_Name', 'Mandays', 'Mnd/Area', 'Section_Name', 'Squad_Name'];
 
-		const url = environment.url + 'cultdaily?start=' + this.convert(this.startdate) + '&end=' + this.convert(this.enddate);
+		this.dateService.loadUpdatedDates().subscribe(
+			(date: any) => {
+			  this.startdate = new Date(date.Date.split('/').join('-'));
+			  const url = environment.url + 'cultdaily?start=' + this.convert(this.startdate) + '&end=' + this.convert(this.enddate);
+			  this.http.get(url).subscribe((data: ICultivation) => {
+				  this.dataSource = data;
+			  });
+			}, error => {
+			  console.log(error);
+			}
+		);
+
+	/*	const url = environment.url + 'cultdaily?start=' + this.convert(this.startdate) + '&end=' + this.convert(this.enddate);
 		this.http.get(url).subscribe((data: ICultivation) => {
 			this.dataSource = data;
-		});
+		}); */
 	}
 
 	clickedGo() {
