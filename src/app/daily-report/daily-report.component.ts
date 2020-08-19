@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
 import { Subscription } from 'rxjs';
 
+import { DateLoaderService } from '../_services/date-loader.service';
 import { environment } from './../../environments/environment';
 
 @Component({
@@ -32,7 +33,7 @@ export class DailyReportComponent implements OnInit, OnDestroy {
 
   mediaSubscription: Subscription;
 
-  constructor(private http: HttpClient, private breakPointObserver: BreakpointObserver) {
+  constructor(private http: HttpClient, private breakPointObserver: BreakpointObserver, private dateService: DateLoaderService) {
   }
 
   ngOnInit() {
@@ -47,6 +48,25 @@ export class DailyReportComponent implements OnInit, OnDestroy {
     this.CultivationColumns = ['Date', 'Division', 'AreaCovered', 'Job_Name', 'Mandays', 'Mnd/Area', 'Section_Name', 'Squad_Name'];
     this.FuelReportColumns = ['Machine', 'FuelUsed', 'TM', 'TMFuel'];
 
+    this.dateService.loadUpdatedDates().subscribe(
+      (date: any) => {
+        this.startdate = new Date(date.Date.split('/').join('-'));
+        const url = environment.url + 'dailyreport?start=' + this.convert(this.startdate);
+        this.http.get(url).subscribe((data: DailyReport) => {
+          this.teaMadeData = data.TeaMade;
+          this.greenleafData = data.Greenleaf;
+          this.gradePerData = data.GradePer;
+          this.MandaysData = data.Mandays;
+          this.PluckingData = data.Plucking;
+          this.CultivationData = data.Cultivation;
+          this.FuelReportData = data.FuelReport;
+        });
+      }, error => {
+        console.log(error);
+      }
+    );
+
+    /*
     const url = environment.url + 'dailyreport?start=' + this.convert(this.startdate);
     this.http.get(url).subscribe((data: DailyReport) => {
       this.teaMadeData = data.TeaMade;
@@ -56,7 +76,7 @@ export class DailyReportComponent implements OnInit, OnDestroy {
       this.PluckingData = data.Plucking;
       this.CultivationData = data.Cultivation;
       this.FuelReportData = data.FuelReport;
-    });
+    }); */
 
     this.mediaWidthHandler();
   }
