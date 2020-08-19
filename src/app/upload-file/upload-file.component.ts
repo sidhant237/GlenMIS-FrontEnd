@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {MatSnackBar} from '@angular/material/snack-bar';
 
+import { DateLoaderService } from '../_services/date-loader.service';
 import { environment } from './../../environments/environment';
 
 @Component({
@@ -15,17 +16,26 @@ export class UploadFileComponent implements OnInit {
   isUploading = false;
   isMailSending = false;
   activeMenu = 'upload';
-  authenticated: boolean = false;
+  authenticated: boolean = true;
   token: string;
 
   table = '';
-  uploadDate: string;
+  uploadDate: any;
 
-  emailDate: string;
+  emailDate: any;
 
-  constructor(private http: HttpClient, private snackBar: MatSnackBar) { }
+  constructor(private http: HttpClient, private snackBar: MatSnackBar, private dateService: DateLoaderService) { }
 
   ngOnInit() {
+    this.dateService.loadUpdatedDates().subscribe(
+      (date: any) => {
+        this.uploadDate = new Date(date.Date.split('/').join('-'));
+        this.emailDate = new Date(date.Date.split('/').join('-')).toISOString().split('T')[0];
+        console.log(this.uploadDate);
+      }, error => {
+        console.log(error);
+      }
+    );
   }
 
   handleFileInput(files: FileList) {

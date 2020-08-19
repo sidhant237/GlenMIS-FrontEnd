@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
 import { Subscription } from 'rxjs';
 
+import { DateLoaderService } from '../_services/date-loader.service';
 import { environment } from './../../environments/environment';
 
 
@@ -20,7 +21,7 @@ export class TeaStockComponent implements OnInit, OnDestroy {
 
   mediaSubscription: Subscription;
 
-  constructor(private http: HttpClient, private breakPointObserver: BreakpointObserver) {
+  constructor(private http: HttpClient, private breakPointObserver: BreakpointObserver, private dateService: DateLoaderService) {
   }
 
   ngOnInit() {
@@ -28,10 +29,23 @@ export class TeaStockComponent implements OnInit, OnDestroy {
     this.startdate.setDate(this.startdate.getDate() - 1);
     this.displayedColumns = ['Grade', 'Kg' ];
 
+    this.dateService.loadUpdatedDates().subscribe(
+      (date: any) => {
+        this.startdate = new Date(date.Date.split('/').join('-'));
+        const url = environment.url + 'teastock?start=' + this.convert(this.startdate);
+        this.http.get(url).subscribe((data: TeaStock) => {
+        this.dataSource = data;
+        });
+      }, error => {
+        console.log(error);
+      }
+    );
+
+    /*
     const url = environment.url + 'teastock?start=' + this.convert(this.startdate);
     this.http.get(url).subscribe((data: TeaStock) => {
     this.dataSource = data;
-    });
+    }); */
 
     this.mediumScreenHandler();
   }
