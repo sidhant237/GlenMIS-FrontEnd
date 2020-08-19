@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { HttpClient } from '@angular/common/http';
 
+import { DateLoaderService } from '../_services/date-loader.service';
 import { environment } from './../../environments/environment';
 
 @Component({
@@ -25,7 +26,7 @@ export class PluckingGrpComponent implements OnInit {
   group: string;
   groupCmp: string;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private dateService: DateLoaderService) {
   }
 
   ngOnInit() {
@@ -42,10 +43,23 @@ export class PluckingGrpComponent implements OnInit {
     this.group = 'Division';
     this.groupCmp = 'Division';
 
+    this.dateService.loadUpdatedDates().subscribe(
+      (date: any) => {
+        this.startdate = new Date(date.Date.split('/').join('-'));
+        const url = environment.url + 'pluckgroup?start=' + this.convert(this.startdate) + '&end=' + this.convert(this.enddate) + '&grpby=' + this.selected;
+        this.http.get(url).subscribe((data: PluckingGroupBySection) => {
+          this.dataSource = data;
+        });
+      }, error => {
+        console.log(error);
+      }
+    );
+
+    /*
     const url = environment.url + 'pluckgroup?start=' + this.convert(this.startdate) + '&end=' + this.convert(this.enddate) + '&grpby=' + this.selected;
     this.http.get(url).subscribe((data: PluckingGroupBySection) => {
       this.dataSource = data;
-    });
+    }); */
   }
 
   clickedGo() {
