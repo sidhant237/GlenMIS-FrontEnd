@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { HttpClient } from '@angular/common/http';
 
+import { DateLoaderService } from '../_services/date-loader.service';
 import { environment } from './../../environments/environment';
 
 @Component({
@@ -19,7 +20,7 @@ export class PluckingComponent implements OnInit {
   dataSourceCmp: any;
   showCompare: boolean;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private dateService: DateLoaderService) {
   }
 
   ngOnInit() {
@@ -32,10 +33,23 @@ export class PluckingComponent implements OnInit {
     this.displayedColumns = [ 'Date', 'Division', 'Section_Name', 'Squad_Name', 'Mandays', 'Greenleaf',
                               'AreaCovered', 'GlMnd', 'GlHa', 'MndHa', 'Prune', 'Jat', 'SecArea'];
 
+    this.dateService.loadUpdatedDates().subscribe(
+      (date: any) => {
+        this.startdate = new Date(date.Date.split('/').join('-'));
+        const url = environment.url + 'pluckdaily?start=' + this.convert(this.startdate) + '&end=' + this.convert(this.enddate);
+        this.http.get(url).subscribe((data: Plucking) => {
+          this.dataSource = data;
+        });
+      }, error => {
+        console.log(error);
+      }
+    );
+
+    /*
     const url = environment.url + 'pluckdaily?start=' + this.convert(this.startdate) + '&end=' + this.convert(this.enddate);
     this.http.get(url).subscribe((data: Plucking) => {
       this.dataSource = data;
-    });
+    }); */
   }
 
   clickedGo() {
