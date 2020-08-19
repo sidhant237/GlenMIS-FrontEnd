@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
 import { Subscription } from 'rxjs';
 
+import { DateLoaderService } from '../_services/date-loader.service';
 import { environment } from './../../environments/environment';
 
 @Component({
@@ -24,7 +25,7 @@ export class FactoryComponent implements OnInit, OnDestroy {
 
   mediaSubscription: Subscription;
 
-  constructor(private http: HttpClient, private breakPointObserver: BreakpointObserver) {
+  constructor(private http: HttpClient, private breakPointObserver: BreakpointObserver, private dateService: DateLoaderService) {
   }
 
   ngOnInit() {
@@ -34,12 +35,27 @@ export class FactoryComponent implements OnInit, OnDestroy {
     this.greenLeafColumns = ['Division', 'GLToday', 'GLTodayLY', 'FineLeaf'];
     this.GradePerColumns = ['Grade', 'PercentToday', 'PercentTodate'];
 
+    this.dateService.loadUpdatedDates().subscribe(
+      (date: any) => {
+        this.date = new Date(date.Date.split('/').join('-'));
+        const url = environment.url + 'factory?start=' + this.convert(this.date);
+        this.http.get(url).subscribe((data: Factory) => {
+          this.teaMadeData = data.TeaMade;
+          this.greenleafData = data.Greenleaf;
+          this.gradePerData = data.GradePer;
+        });
+      }, error => {
+        console.log(error);
+      }
+    );
+
+  /*
     const url = environment.url + 'factory?start=' + this.convert(this.date);
     this.http.get(url).subscribe((data: Factory) => {
       this.teaMadeData = data.TeaMade;
       this.greenleafData = data.Greenleaf;
       this.gradePerData = data.GradePer;
-    });
+    }); */
 
     this.mediaWidthHandler();
   }
