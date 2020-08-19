@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { HttpClient } from '@angular/common/http';
 
+import { DateLoaderService } from '../_services/date-loader.service';
 import { environment } from './../../environments/environment';
 
 @Component({
@@ -15,7 +16,7 @@ export class InvoiceListComponent implements OnInit {
   displayedColumns: string[];
   dataSource: Invoice;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private dateService: DateLoaderService) {
   }
 
   ngOnInit() {
@@ -24,10 +25,23 @@ export class InvoiceListComponent implements OnInit {
     this.startdate.setDate(this.startdate.getDate() - 1);
     this.displayedColumns = ['InvNo', 'Grade', 'NetWt', 'Papersacks', 'Packdate'];
 
+    this.dateService.loadUpdatedDates().subscribe(
+      (date: any) => {
+        this.startdate = new Date(date.Date.split('/').join('-'));
+        const url = environment.url + 'invoicelist?start=' + this.convert(this.startdate) + '&end=' + this.convert(this.enddate);
+        this.http.get(url).subscribe((data: Invoice) => {
+        this.dataSource = data;
+        });
+      }, error => {
+        console.log(error);
+      }
+    );
+
+    /*
     const url = environment.url + 'invoicelist?start=' + this.convert(this.startdate) + '&end=' + this.convert(this.enddate);
     this.http.get(url).subscribe((data: Invoice) => {
     this.dataSource = data;
-    });
+    }); */
   }
 
   clickedGo() {
