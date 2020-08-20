@@ -10,24 +10,23 @@
                     <label for="tab">Select Table: </label>
                     <select class="form-control"  id="tab" [(ngModel)]="table">
                         <option value="" disabled>Select Table</option>
-                        <option value="pluckentry">Plucking Table</option>
-                        <option value="cultentry">Cultivate Table</option>
-                        <option value="jobentry">Job Table</option>
-                        <option value="tmentry">TM Table</option>
-                        <option value="fuelentry">Fuel Table</option>
-                        <option value="sortentry">Sort Table</option>
-                        <option value="flentry">FL Table</option>
+                        <option value="pluckentry">1- Plucking Table</option>
+                        <option value="cultentry">2- Cultivate Table</option>
+                        <option value="jobentry">3- Job Table</option>
+                        <option value="tmentry">4- TM Table</option>
+                        <option value="fuelentry">5- Fuel Table</option>
+                        <option value="sortentry">6- Sort Table</option>
+                        <option value="flentry">7- FL Table</option>
                     </select>
-                </div>
-                <div class="form-group">
-                    <label for="date"> Last Updated Date: </label>
-                    <input class="form-control" type="date" name="date" id="date" [(ngModel)]="uploadDate">
                 </div>
                 <div class="form-group">
                     <label for="date"> CSV File: </label>
                     <input class="file-input" id="file-input" type="file" id="file" (change)="handleFileInput($event.target.files)">
                 </div>
-                <button mat-raised-button color="accent" *ngIf="!isUploading" [disabled]="table === ''" (click)="uploadFileToServer()">Upload File</button>
+                <div class="button-wrap">
+                    <button mat-raised-button color="accent" *ngIf="!isUploading" [disabled]="table === ''" (click)="uploadFileToServer()">Upload File</button>
+                    <button mat-raised-button color="accent" *ngIf="!isUploading" (click)="modelShowHandler()">Update Date</button>
+                </div>
                 <app-spinner *ngIf="isUploading"></app-spinner>
             </div>
             <div class="email-wrap" *ngIf="activeMenu === 'email'">
@@ -46,4 +45,13 @@
             <button mat-raised-button color="accent" (click)="authenticateHandler()">Authenticate</button>
         </div>
     </div>
+    <div class="model mat-elevation-z8" [ngClass]="{'hide': hideModel === true } ">
+        <h3>Update Date</h3>
+        <div class="form-group">
+            <label for="date">Updated Date: </label>
+            <input class="form-control" type="date" name="date" id="date" [(ngModel)]="uploadDate">
+        </div>
+        <button mat-raised-button color="accent" (click)="dateUpdateHandler()">Update</button>
+    </div>
+    <div class="back-drop" [ngClass]="{'hide': hideModel === true } " (click)="modelHideHandler()"></div>
 </div>

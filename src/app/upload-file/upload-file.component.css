@@ -4,6 +4,17 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
+}
+
+.back-drop {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100vw;
+    height: 100vh;
+    z-index: 199;
+    background-color: rgba(0, 0, 0, 0.5);
 }
 
 .tab-wrap {
@@ -98,8 +109,38 @@
     width: 200px;
 }
 
+.button-wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 button {
-    margin: 20px 0px;
+    margin: 10px 20px;
+}
+
+.model {
+    background-color: white;
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 200;
+    width: 500px;
+    height: 50%;
+}
+
+.model .form-group {
+    width: 100%;
+    margin: 20px 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hide {
+    display: none;
 }
 
 @media(max-width: 700px) {
@@ -112,6 +153,14 @@ button {
         align-items: flex-start;
         margin: 10px;
         margin-left: 40px;
+    }
+    
+    .button-wrap {
+        flex-direction: column;
+    }
+
+    .model {
+        width: 90%;
     }
 }
 

@@ -16,20 +16,24 @@ export class UploadFileComponent implements OnInit {
   isUploading = false;
   isMailSending = false;
   activeMenu = 'upload';
-  authenticated: boolean = true;
+  authenticated: boolean = false;
   token: string;
+  hideModel = true;
 
   table = '';
   uploadDate: any;
 
   emailDate: any;
 
-  constructor(private http: HttpClient, private snackBar: MatSnackBar, private dateService: DateLoaderService) { }
+  constructor(
+    private http: HttpClient,
+    private snackBar: MatSnackBar,
+    private dateService: DateLoaderService) { }
 
   ngOnInit() {
     this.dateService.loadUpdatedDates().subscribe(
       (date: any) => {
-        this.uploadDate = new Date(date.Date.split('/').join('-'));
+        this.uploadDate = new Date(date.Date.split('/').join('-')).toISOString().split('T')[0];
         this.emailDate = new Date(date.Date.split('/').join('-')).toISOString().split('T')[0];
         console.log(this.uploadDate);
       }, error => {
@@ -80,9 +84,30 @@ export class UploadFileComponent implements OnInit {
   }
 
   authenticateHandler() {
-    if(this.token === 'glenburnmis') {
+    if (this.token === 'glenburnmis') {
       this.authenticated = true;
     }
+  }
+
+  dateUpdateHandler() {
+    const url = environment.url + 'update-date?date=' + this.uploadDate;
+    this.http.post(url, {}).subscribe(
+      result => {
+        this.hideModel = true;
+        this.openSnackBar('Date is updated', 'success');
+      }, error => {
+        this.hideModel = true;
+        this.openSnackBar('Something went wrong', 'Error');
+      }
+    );
+  }
+
+  modelShowHandler() {
+    this.hideModel = false;
+  }
+
+  modelHideHandler() {
+    this.hideModel = true;
   }
 
 }
