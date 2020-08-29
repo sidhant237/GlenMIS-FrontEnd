@@ -33,7 +33,13 @@
         <td mat-cell *matCellDef="let element"> {{element.Job_Name}} </td>
         <td mat-footer-cell *matFooterCellDef>Total</td>
         </ng-container>
-    
+        
+        <ng-container matColumnDef="JobID" >
+          <th mat-header-cell *matHeaderCellDef> JobID </th>
+          <td mat-cell *matCellDef="let element"> {{element.JobID}} </td>
+          <td mat-footer-cell *matFooterCellDef>Total</td>
+          </ng-container>
+
         <!-- Name Column -->
         <ng-container matColumnDef="Mandays">
         <th mat-header-cell *matHeaderCellDef> Mandays </th>
@@ -76,6 +82,12 @@
         <ng-container matColumnDef="Job_Name">
         <th mat-header-cell *matHeaderCellDef>Job Name</th>
         <td mat-cell *matCellDef="let element"> {{element.Job_Name}} </td>
+        <td mat-footer-cell *matFooterCellDef>Total</td>
+        </ng-container>
+
+        <ng-container matColumnDef="JobID" >
+        <th mat-header-cell *matHeaderCellDef> JobID </th>
+        <td mat-cell *matCellDef="let element"> {{element.JobID}} </td>
         <td mat-footer-cell *matFooterCellDef>Total</td>
         </ng-container>
     

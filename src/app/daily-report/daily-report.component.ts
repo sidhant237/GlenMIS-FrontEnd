@@ -39,12 +39,11 @@ export class DailyReportComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.startdate = new Date();
     this.startdate.setDate(this.startdate.getDate() - 1);
-    this.teaMadeColumns = ['TMToday', 'TMTodate', 'TMTodateLY', 'RecoveryToday', 'RecoveryTodate'];
-    this.greenLeafColumns = ['Division', 'GLToday', 'GLTodayLY', 'FineLeaf'];
+    this.teaMadeColumns = ['TMToday', 'TMTodate', 'TMTodateLY','Difference', 'RecoveryToday', 'RecoveryTodate'];
+    this.greenLeafColumns = ['Division','GLToday','GLTodayLY','GLTodate','GLTodateLY','FineLeaf','FineLeafLY'];
     this.GradePerColumns = ['Grade', 'PercentToday', 'PercentTodate'];
     this.MandaysColumns = ['Job_Name', 'Mandays'];
-    this.PluckingColumns = ['Date', 'Division', 'Section_Name', 'Squad_Name', 'Mandays', 'Greenleaf', 'AreaCovered',
-                            'GlMnd', 'GlHa', 'MndHa', 'Prune', 'Jat', 'SecArea'];
+    this.PluckingColumns = ['Date', 'Prune','Section_Name', 'Mandays', 'Greenleaf', 'AreaCovered', 'GlMnd', 'GlHa', 'MndHa','PluckInt', 'Squad_Name','Jat','SecArea'];
     this.CultivationColumns = ['Date', 'Division', 'AreaCovered', 'Job_Name', 'Mandays', 'Mnd/Area', 'Section_Name', 'Squad_Name'];
     this.FuelReportColumns = ['Machine', 'FuelUsed', 'TM', 'TMFuel'];
 

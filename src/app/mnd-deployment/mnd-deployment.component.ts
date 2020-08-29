@@ -7,6 +7,7 @@ import { DateLoaderService } from '../_services/date-loader.service';
 
 export interface MndDeployment {
   Job_Name: string;
+  Job_ID: number;
   Mandays: number;
 }
 
@@ -18,7 +19,7 @@ export interface MndDeployment {
 })
 export class MndDeploymentComponent implements OnInit {
 
-  displayedColumns: string[] = ['Job_Name', 'Mandays'];
+  displayedColumns: string[] = ['Job_Name','JobID', 'Mandays'];
   dataSource: MndDeployment[];
   startdate: any;
   enddate: any;

@@ -30,8 +30,7 @@ export class PluckingComponent implements OnInit {
     this.startdateCmp = this.startdate;
     this.enddateCmp = this.enddate;
     this.showCompare = false;
-    this.displayedColumns = [ 'Date', 'Division', 'Section_Name', 'Squad_Name', 'Mandays', 'Greenleaf',
-                              'AreaCovered', 'GlMnd', 'GlHa', 'MndHa', 'Prune', 'Jat', 'SecArea'];
+    this.displayedColumns = ['Date', 'Prune','Section_Name', 'Mandays', 'Greenleaf', 'AreaCovered', 'GlMnd', 'GlHa', 'MndHa','PluckInt', 'Squad_Name','Jat','SecArea'];
 
     this.dateService.loadUpdatedDates().subscribe(
       (date: any) => {
@@ -97,16 +96,16 @@ export class PluckingComponent implements OnInit {
 
 export interface Plucking {
   Date: string;
+  Prune:string
   Section_Name: string;
-  Squad_Name: string;
   Mandays: number;
   Greenleaf: number;
   AreaCovered: number;
   GlMnd: number;
   GlHa: number;
   MndHa: number;
-  Division: string;
-  Prune: string;
+  PluckInt: number;
+  Squad_Name: String;
   Jat: string;
   SecArea: number;
 }

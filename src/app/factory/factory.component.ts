@@ -31,8 +31,8 @@ export class FactoryComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.date = new Date();
     this.date.setDate(this.date.getDate() - 1);
-    this.teaMadeColumns = ['TMToday', 'TMTodate', 'TMTodateLY', 'RecoveryToday', 'RecoveryTodate'];
-    this.greenLeafColumns = ['Division', 'GLToday', 'GLTodayLY', 'FineLeaf'];
+    this.teaMadeColumns = ['TMToday', 'TMTodate', 'TMTodateLY','Difference', 'RecoveryToday', 'RecoveryTodate'];
+    this.greenLeafColumns = ['Division','GLToday','GLTodayLY','GLTodate','GLTodateLY','FineLeaf','FineLeafLY'];
     this.GradePerColumns = ['Grade', 'PercentToday', 'PercentTodate'];
 
     this.dateService.loadUpdatedDates().subscribe(

@@ -71,7 +71,7 @@ export class UploadFileComponent implements OnInit {
 
   emailReportHandler() {
     this.isMailSending = true;
-    const url = environment.url + 'email-report';
+    const url = environment.url + 'email-report?start=' + this.emailDate;
     this.http.post(url, {}).subscribe(
       result => {
         this.isMailSending = false;

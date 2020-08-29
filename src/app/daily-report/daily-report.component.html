@@ -22,7 +22,7 @@
             <th mat-header-cell *matHeaderCellDef> Division </th>
             <td mat-cell *matCellDef="let element"> {{element.Division}} </td>
             <td mat-footer-cell *matFooterCellDef>Total</td>
-
+       
         </ng-container>
 
         <ng-container matColumnDef="GLToday">
@@ -37,10 +37,28 @@
             <td mat-footer-cell *matFooterCellDef>{{getTotal('greenleafData','GLTodayLY') | number}}</td>
         </ng-container>
 
+        <ng-container matColumnDef="GLTodate">
+            <th mat-header-cell *matHeaderCellDef> GLTodate </th>
+            <td mat-cell *matCellDef="let element"> {{element.GLTodate}} </td>
+            <td mat-footer-cell *matFooterCellDef>{{getTotal('greenleafData','GLTodate') | number}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="GLTodateLY">
+            <th mat-header-cell *matHeaderCellDef> GLTodate LY </th>
+            <td mat-cell *matCellDef="let element"> {{element.GLTodateLY}} </td>
+            <td mat-footer-cell *matFooterCellDef>{{getTotal('greenleafData','GLTodateLY') | number}}</td>
+        </ng-container>
+
         <ng-container matColumnDef="FineLeaf">
             <th mat-header-cell *matHeaderCellDef> Fine Leaf % </th>
             <td mat-cell *matCellDef="let element"> {{element.FineLeaf}} </td>
-            <td mat-footer-cell *matFooterCellDef>{{getTotal('greenleafData','FineLeaf') | number}}</td>
+            <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
+
+        <ng-container matColumnDef="FineLeafLY">
+            <th mat-header-cell *matHeaderCellDef> Fine Leaf % LY </th>
+            <td mat-cell *matCellDef="let element"> {{element.FineLeafLY}} </td>
+            <td mat-footer-cell *matFooterCellDef></td>
         </ng-container>
 
         <!-- header -->
@@ -72,6 +90,12 @@
             <th mat-header-cell *matHeaderCellDef> TM Todate LY </th>
             <td mat-cell *matCellDef="let element"> {{element.TMTodateLY}} </td>
             <td mat-footer-cell *matFooterCellDef>{{getTotal('teaMadeData','TMTodateLY') | number}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="Difference">
+            <th mat-header-cell *matHeaderCellDef> + / - </th>
+            <td mat-cell *matCellDef="let element"> {{element.Difference}} </td>
+            <td mat-footer-cell *matFooterCellDef>{{getTotal('teaMadeData','Difference') | number}}</td>
         </ng-container>
 
         <ng-container matColumnDef="RecoveryToday">
@@ -124,16 +148,16 @@
 <div class="example-container mat-elevation-z8">
     <table mat-table [dataSource]="PluckingData" class="col-10">
 
-        <ng-container matColumnDef="Division">
-            <th mat-header-cell *matHeaderCellDef> Division </th>
-            <td mat-cell *matCellDef="let element"> {{element.Division}} </td>
-            <td mat-footer-cell *matFooterCellDef></td>
-        </ng-container>
-
         <ng-container matColumnDef="Date">
             <th mat-header-cell *matHeaderCellDef> Date </th>
             <td mat-cell *matCellDef="let element"> {{element.Date}} </td>
             <td mat-footer-cell *matFooterCellDef>Total</td>
+        </ng-container>
+  
+        <ng-container matColumnDef="Prune">
+          <th mat-header-cell *matHeaderCellDef> Prune </th>
+          <td mat-cell *matCellDef="let element"> {{element.Prune}} </td>
+          <td mat-footer-cell *matFooterCellDef></td>
         </ng-container>
     
         <ng-container matColumnDef="Section_Name">
@@ -141,13 +165,7 @@
             <td mat-cell *matCellDef="let element"> {{element.Section_Name}} </td>
             <td mat-footer-cell *matFooterCellDef></td>
         </ng-container>
-    
-        <ng-container matColumnDef="Squad_Name">
-            <th mat-header-cell *matHeaderCellDef> Squad Name </th>
-            <td mat-cell *matCellDef="let element"> {{element.Squad_Name}} </td>
-            <td mat-footer-cell *matFooterCellDef></td>
-        </ng-container>
-    
+     
         <ng-container matColumnDef="Mandays">
             <th mat-header-cell *matHeaderCellDef> Mandays </th>
             <td mat-cell *matCellDef="let element"> {{element.Mandays}} </td>
@@ -157,7 +175,7 @@
         <ng-container matColumnDef="Greenleaf">
             <th mat-header-cell *matHeaderCellDef> Greenleaf </th>
             <td mat-cell *matCellDef="let element"> {{element.Greenleaf}} </td>
-            <td mat-footer-cell *matFooterCellDef>{{getTotal('PluckingData','Greenleaf') | number}}</td>
+            <td mat-footer-cell *matFooterCellDef>{{getTotal('PluckingData','Greenleaf') | number}}td>
         </ng-container>
     
         <ng-container matColumnDef="AreaCovered">
@@ -169,24 +187,30 @@
         <ng-container matColumnDef="GlMnd">
             <th mat-header-cell *matHeaderCellDef> Gl Mnd </th>
             <td mat-cell *matCellDef="let element"> {{element.GlMnd}} </td>
-            <td mat-footer-cell *matFooterCellDef>{{getTotal('PluckingData','GlMnd') | number}}</td>
+            <td mat-footer-cell *matFooterCellDef></td>
         </ng-container>
     
         <ng-container matColumnDef="GlHa">
             <th mat-header-cell *matHeaderCellDef> Gl Ha </th>
             <td mat-cell *matCellDef="let element"> {{element.GlHa}} </td>
-            <td mat-footer-cell *matFooterCellDef>{{getTotal('PluckingData','GlHa') | number}}</td>
+            <td mat-footer-cell *matFooterCellDef></td>
         </ng-container>
   
         <ng-container matColumnDef="MndHa">
             <th mat-header-cell *matHeaderCellDef> Mnd Ha </th>
             <td mat-cell *matCellDef="let element"> {{element.MndHa}} </td>
-            <td mat-footer-cell *matFooterCellDef>{{getTotal('PluckingData','MndHa') | number}}</td>
+            <td mat-footer-cell *matFooterCellDef></td>
         </ng-container>
   
-        <ng-container matColumnDef="Prune">
-            <th mat-header-cell *matHeaderCellDef> Prune </th>
-            <td mat-cell *matCellDef="let element"> {{element.Prune}} </td>
+        <ng-container matColumnDef="PluckInt">
+            <th mat-header-cell *matHeaderCellDef> Pl. Rnd </th>
+            <td mat-cell *matCellDef="let element"> {{element.PluckInt}} </td>
+            <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
+  
+        <ng-container matColumnDef="Squad_Name">
+            <th mat-header-cell *matHeaderCellDef> Squad </th>
+            <td mat-cell *matCellDef="let element"> {{element.Squad_Name}} </td>
             <td mat-footer-cell *matFooterCellDef></td>
         </ng-container>
   
@@ -197,9 +221,9 @@
         </ng-container>
   
         <ng-container matColumnDef="SecArea">
-            <th mat-header-cell *matHeaderCellDef> Section Area </th>
+            <th mat-header-cell *matHeaderCellDef> SecArea </th>
             <td mat-cell *matCellDef="let element"> {{element.SecArea}} </td>
-            <td mat-footer-cell *matFooterCellDef>{{getTotal('PluckingData','SecArea') | number}}</td>
+            <td mat-footer-cell *matFooterCellDef></td>
         </ng-container>
 
         <!-- header -->
